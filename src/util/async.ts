@@ -1,0 +1,1 @@
+export const asyncHandler = (cb: (req, res) => Promise<void>) => (_req, _res, next): Promise<void> => cb(_req, _res).catch(next);

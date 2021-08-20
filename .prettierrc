@@ -2,4 +2,5 @@
   "singleQuote": true,
   "arrowParens": "avoid",
   "trailingComma": "all"
+  "indent": ["error", 2],
 }

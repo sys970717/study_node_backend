@@ -7,4 +7,4 @@ const server = (): void => {
   app.listen(port, () => console.log(`listening ${port}`));
 }
 
-export default server;
+server();

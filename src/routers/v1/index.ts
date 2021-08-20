@@ -1,8 +1,9 @@
 import { Router } from "express";
+import { asyncHandler } from "../../util/async";
 const router = Router();
 
-router.get("/", (req, res, next) => {
-  return res.send('HIHIh');
+router.get("/", async (req, res)=> {
+  return res.json(req.query);
 });
 
 export default router;
