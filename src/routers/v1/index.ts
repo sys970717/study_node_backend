@@ -1,9 +1,8 @@
-import { Router } from "express";
-import { asyncHandler } from "../../util/async";
+import { Router } from 'express';
+import Board from './board';
+
 const router = Router();
 
-router.get("/", async (req, res)=> {
-  return res.json(req.query);
-});
+router.use("/board", Board);
 
 export default router;
