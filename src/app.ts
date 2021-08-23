@@ -1,6 +1,6 @@
 import express, { ErrorRequestHandler } from 'express';
+import 'reflect-metadata';
 import v1Router from './routers/v1';
-import bodyParser, { urlencoded, json as jsonencoded } from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import NotFoundError from './domains/errors/NotFoundError';
@@ -18,11 +18,10 @@ class App {
 const app = new App().application;
 
 app.use(cors());
-app.use(urlencoded({
+app.use(express.urlencoded({
     extended: true,
 }));
-app.use(jsonencoded());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use("/v1", v1Router);
 
 const errorHandler = (err, req, res, _next) : ErrorRequestHandler => {
