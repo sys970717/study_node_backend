@@ -1,5 +1,5 @@
 export type ServiceContext = {
-
+  transaction: <T>(callbackFn: (transaction) => Promise<T>, isSerializable?: boolean) => Promise<T>;
 };
 
 export default class Service {
