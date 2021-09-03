@@ -1,33 +1,58 @@
 import "reflect-metadata";
-import { getConnectionManager } from "typeorm";
+import { Connection, getConnectionManager } from "typeorm";
+import Products from "../../../domains/entity/products";
 
 const connectionManager = getConnectionManager();
-const connInfo = connectionManager.create({
-  type: "mysql",
-  host: "localhost",
-  port: 3306,
-  username: "test",
-  password: "test",
-  database: "test",
-  synchronize: true,
-  logging: false,
-  entities: [
-    "src/databases/**/entity/**/*.ts"
-  ],
-  "migrations": [
-    "src/databases/**/migration/**/*.ts"
-  ],
-  "cli": {
-    "entitiesDir": "src/databases/**/entity",
-    "migrationsDir": "src/databases/**/migration"
-  },
-  "extra": {
-    "connectionLimit": 8
+
+const pool = {
+  max: 10,
+  min: 5,
+  acquire: 30000,
+  idle: 10000
+};
+
+export default class TestDatabase {
+  private connection: Connection;
+
+  private DB_HOST: string;
+  private DB_PORT: number;
+  private DB_USER: string;
+  private DB_NAME: string;
+
+  constructor(DB_HOST: string, DB_USER: string, DB_PORT: number, DB_NAME: string) {
+    this.DB_HOST = DB_HOST || 'localhost';
+    this.DB_PORT = DB_PORT || 3306;
+    this.DB_USER = DB_USER || 'test';
+    this.DB_NAME = DB_NAME || 'test1234';
   }
-});
 
-const connection = connInfo.connect().then(conn => {
-  return conn;
-});
+  async createConnection() {
+    this.connection = await connectionManager.create({
+      type: "mysql",
+      host: this.DB_HOST,
+      port: this.DB_PORT,
+      username: this.DB_USER,
+      password: this.DB_NAME,
+      database: "test",
+      synchronize: true,
+      logging: false,
+      entities: [
+        Products,
+      ],
+      "migrations": [
+        "/src/databases/**/migration/**/*.ts"
+      ],
+      "cli": {
+        "entitiesDir": "/src/databases/**/entity",
+        "migrationsDir": "/src/databases/**/migration"
+      },
+      extra: {
+        "connectionLimit": 8
+      },
+    }).connect();
+  }
 
-export default connection;
+  async getConnection () {
+   return this.connection;
+  }
+};

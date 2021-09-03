@@ -5,13 +5,19 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import NotFoundError from './domains/errors/NotFoundError';
 import FormSyntaxError from './domains/errors/FormSyntaxError';
+import TestDatabase from './config/databases/testDatabase';
 
 dotenv.config();
 
 class App {
     public application : express.Application;
+    
     constructor() {
         this.application = express();
+        new TestDatabase('localhost', '', 3306, '').createConnection().then(() => {
+            console.info('db connection')
+        })
+        .catch(err => { console.error(err)} );
     }
 }
 
