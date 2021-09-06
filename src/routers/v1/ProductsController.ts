@@ -3,10 +3,19 @@ import { Controller } from "../../config/decorators/Controller";
 import { Get } from "../../config/decorators/Get";
 import { Post } from "../../config/decorators/Post";
 
-@Controller('/board')
-export default class BoardsController {
-  @Get('')
+@Controller('/products')
+export default class ProductsController {
+  @Get('/')
   public index(req: Request, res: Response) {
+    const {
+      beginIndex,
+    } = req.query;
+
+    return res.json(beginIndex);
+  }
+
+  @Get('/:id')
+  public getProduct(req: Request, res: Response) {
     const result = {
       'hi': 'hi',
       ...req.query,
@@ -15,7 +24,7 @@ export default class BoardsController {
   }
 
   @Post('/:id')
-  public getId(req: Request, res: Response) {
+  public createProduct(req: Request, res: Response) {
     const { id } = req.params;
     const { name } = req.body;
     return res.json({name, id});

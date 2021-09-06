@@ -1,17 +1,18 @@
 import { Request, Response, Router } from 'express';
 import { RouteDefinition } from '../../config/RouteDefinition';
-import BoardsController from './BoardsController';
+import ProductsController from './ProductsController';
 import { asyncHandler } from "../../util/asyncHandler";
+import UsersController from './UsersController';
 
 const router = Router();
 
 [
-  BoardsController, 
+  ProductsController, UsersController,
 ].forEach(controller => {
   // This is our instantiated class
-  const instance                       = new controller();
+  const instance = new controller();
   // The prefix saved to our controller
-  const prefix                         = Reflect.getMetadata('prefix', controller);
+  const prefix = Reflect.getMetadata('prefix', controller);
   // Our `routes` array containing all our routes for this controller
   const routes: Array<RouteDefinition> = Reflect.getMetadata('routes', controller);
   
