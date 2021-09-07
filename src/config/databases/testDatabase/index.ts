@@ -1,8 +1,10 @@
 import "reflect-metadata";
-import { Connection, ConnectionManager, ConnectionOptions, createConnection, getConnectionManager } from "typeorm";
-import Products from "../../../domains/entity/Products";
-import Users from "../../../domains/entity/Users";
+import { Connection, ConnectionIsNotSetError, ConnectionManager, ConnectionOptions, createConnection, getConnection, getConnectionManager } from "typeorm";
 import dotenv from 'dotenv';
+import path from 'path';
+import Users from "../../../domains/entity/Users";
+
+const __dirname = path.resolve();
 
 const pool = {
   max: 10,
@@ -16,65 +18,52 @@ const env = process.env;
 
 const CONNECTION_NAME = 'test';
 
-const connectionOptions:ConnectionOptions = {
+let entityDir = '';
+if (env.NODE_ENV !== 'production') {
+  entityDir = path.join(__dirname, '..', '..', '..', '../src', '/domains/entity/*.ts')
+} else {
+  entityDir = path.join(__dirname, '..', '..', '..', '../dist', '/domains/entity/*.js')
+}
+
+export const connectionOptions:ConnectionOptions = {
   // name: CONNECTION_NAME,
   type: "mysql",
-  host: 'localhost',
-  port: 3306,
-  username: 'test',
-  password: 'test1234',
-  // host: env.DB_HOST || 'localhost',
-  // port: Number(env.DB_PORT) || 3306,
-  // username: env.DB_USER || 'test',
-  // password: env.DB_PASSWORD || 'test1234',
+  host: env.DB_HOST || 'localhost',
+  port: Number(env.DB_PORT) || 3306,
+  username: env.DB_USER || 'test',
+  password: env.DB_PASSWORD || 'test1234',
   database: CONNECTION_NAME,
   synchronize: true,
   logging: false,
   entities: [
-    Products,
+    // entityDir
     Users,
+    // Products,
   ],
-  "migrations": [
-    "/src/config/databasestestDatabase/migration/**/*.ts"
+  migrations: [
+    path.join(__dirname, './**/migrations/*.js'),
   ],
-  "cli": {
-    "entitiesDir": "/src/databases/**/entity",
-    "migrationsDir": "/src/databases/**/migration"
+  cli: {
+    "entitiesDir": entityDir,
+    "migrationsDir": path.join(__dirname, './**/migrations/*.js'),
   },
   extra: {
     "connectionLimit": 8
   },
 };
 
-const connectionManager = getConnectionManager();
-
 export const testDatabase = async() => {
-  let connection;
-  const hasConnection = connectionManager.has(CONNECTION_NAME);
+  const connectionManager = getConnectionManager();
+  let connection:Connection;
+  const hasConnection = connectionManager.has('default');
+  console.log(`>>>> ${hasConnection}`);
   if(hasConnection) {
-    console.log('이미 연결이 있음.');
-    connection = connectionManager.get(CONNECTION_NAME);
+    connection = getConnection();
     if(!connection.isConnected) {
-      console.log('연결안됨.');
-      connection = connection.connect();
+      connection = await createConnection(connectionOptions);
     }
   } else {
-    console.log('연결 없음');
-    connection = connectionManager.create(connectionOptions);
-    connection.connect()
-      .then((result) => {
-        console.log('asdfasdf');
-        console.log(result);
-        return result
-      })
-      .catch(e => {
-        console.log('실패?');
-        return e
-      });
-      
-    // connection = connectionManager.create(connectionOptions);
-    // connection = await connection.connect();
-    console.log('연결 없음');
+    connection = await createConnection(connectionOptions);
   }
 
   return connection;

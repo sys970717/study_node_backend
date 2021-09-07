@@ -1,22 +1,22 @@
 'use strict';
 
-import { getRepository } from "typeorm";
-import { testDatabase } from "../config/databases/testDatabase";
 import Users from "../domains/entity/Users";
-
-
-testDatabase();
+import { getManager } from "typeorm";
 
 export default class UsersRepository {
   private userRepository;
   public static instance: any;
 
-  constructor() {
-    this.userRepository = getRepository(Users);
-  }
-
   public async findAll() {
+    this.userRepository = await getManager().getRepository(Users)
     const users: Users[] = await this.userRepository.find();
     return users;
+  }
+
+  public async findById(userId:any) {
+    const repository = getManager().getRepository(Users);
+    const user: Users = await repository.findOne(userId);
+
+    return user;
   }
 };

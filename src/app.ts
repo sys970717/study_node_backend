@@ -1,10 +1,11 @@
 import express, { ErrorRequestHandler } from 'express';
 import 'reflect-metadata';
-import v1Router from './routers/v1';
+import v1Router from './routers/v1/index';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import NotFoundError from './domains/errors/NotFoundError';
 import FormSyntaxError from './domains/errors/FormSyntaxError';
+import { testDatabase } from './config/databases/testDatabase';
 
 dotenv.config();
 

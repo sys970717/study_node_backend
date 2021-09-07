@@ -1,14 +1,14 @@
 import UsersRepository from "../repository/UsersRepositry";
 
 export default class UserService {
-  private usersRepository;
-
-  constructor() {
-    this.usersRepository = new UsersRepository();
-  }
+  private usersRepository = new UsersRepository();
 
   public async getUsers() {
-    await this.usersRepository.findAll();
+    return await this.usersRepository.findAll();
+  }
+
+  public async getUserById(userId) {
+    return await this.usersRepository.findById(userId);
   }
   
 }

@@ -16,5 +16,16 @@ export default class UsersController {
     const result = await this.userService.getUsers();
 
     return res.json(result);
+  };
+
+  @Get('/:id')
+  public async getUser(req: Request, res: Response) {
+    const {
+      userId,
+    } = req.params;
+
+    const result = await this.userService.getUserById(userId);
+
+    return res.json(result);
   }
 }
