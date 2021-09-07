@@ -8,7 +8,7 @@ const port: number = Number(process.env.WEB_PORT) || 3000;
 
 const server = async (): Promise<void> => {
   createConnection(connectionOptions).then(async connection => {
-    console.log(await connection.getRepository(Users));
+    console.log(`DB connection = ${connection.isConnected}`);
     app.listen(port, () => console.log(`listening ${port}`));
   })
 }

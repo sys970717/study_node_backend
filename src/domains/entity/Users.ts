@@ -18,6 +18,9 @@ export default class Users extends BaseEntity {
   @Column({ name: 'gender', nullable: false })
   gender: boolean;
 
+  @Column({ name: 'cash', nullable: false, type: 'bigint' })
+  cash: number;
+
   @CreateDateColumn({ name: 'create_at' })
   createAt!: Date;
   @UpdateDateColumn({ name: 'update_at' })

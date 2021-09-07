@@ -4,12 +4,11 @@ import Users from "../domains/entity/Users";
 import { getManager } from "typeorm";
 
 export default class UsersRepository {
-  private userRepository;
   public static instance: any;
 
   public async findAll() {
-    this.userRepository = await getManager().getRepository(Users)
-    const users: Users[] = await this.userRepository.find();
+    const repository = getManager().getRepository(Users);
+    const users: Users[] = await repository.find();
     return users;
   }
 
@@ -18,5 +17,14 @@ export default class UsersRepository {
     const user: Users = await repository.findOne(userId);
 
     return user;
+  }
+
+  public async usersByName(name:string) {
+    const repository = getManager().getRepository(Users);
+    return await repository.find({
+      where: {
+        name,
+      }
+    });
   }
 };
