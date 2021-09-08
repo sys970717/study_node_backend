@@ -5,8 +5,6 @@ import {
 } from 'typeorm';
 import TimestampEntity from './TimestampEntity';
 
-console.log('USERS');
-
 @Entity({ name: 'users' })
 export default class Users extends TimestampEntity {
   @PrimaryGeneratedColumn()
