@@ -10,10 +10,6 @@ export default class UsersController {
 
   @Get('/')
   public async userList(req: Request, res: Response) {
-    const {
-      beginIndex,
-    } = req.query;
-
     const result = await this.userService.getUsers();
 
     return res.json(result);

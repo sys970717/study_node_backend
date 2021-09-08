@@ -3,7 +3,7 @@ export interface IEntity {
   id: number,
   createAt: Date,
   updateAt: Date,
-}
+};
 
 // 추상클래스 선언.
 export abstract class Entity<T extends IEntity> {
@@ -56,4 +56,4 @@ export abstract class Entity<T extends IEntity> {
 
 const isEntity = (entity: any): entity is Entity<any> => {
   return entity instanceof Entity;
-}
+};

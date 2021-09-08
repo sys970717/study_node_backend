@@ -5,7 +5,6 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import NotFoundError from './domains/errors/NotFoundError';
 import FormSyntaxError from './domains/errors/FormSyntaxError';
-import { testDatabase } from './config/databases/testDatabase';
 
 dotenv.config();
 
@@ -26,7 +25,7 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use("/v1", v1Router);
 
-const errorHandler = (err, req, res, _next) : ErrorRequestHandler => {
+const errorHandler = (err, req, res) : ErrorRequestHandler => {
     console.error(err);
     const obj = {
         debug: true,
@@ -34,7 +33,7 @@ const errorHandler = (err, req, res, _next) : ErrorRequestHandler => {
         message: err.message,
         stack: err.stack,
         user: undefined,
-    }
+    };
     if(process.env.NODE_ENV === 'production') {
         delete obj.debug;
         delete obj.stack;

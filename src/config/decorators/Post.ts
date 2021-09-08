@@ -5,7 +5,7 @@ export const Post = (path: string): MethodDecorator => {
   return (
     target: Object,
     propertyKey: string | symbol,
-    descriptor: PropertyDescriptor
+    // descriptor: PropertyDescriptor
   ) => {
     // In case this is the first route to be registered the `routes` metadata is likely to be undefined at this point.
     // To prevent any further validation simply set it to an empty array here.

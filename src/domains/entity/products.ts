@@ -2,24 +2,20 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
 } from 'typeorm';
+import TimestampEntity from './TimestampEntity';
+
+console.log('PRODUCTS');
 
 @Entity({ name: 'products' })
-export default class Products {
+export default class Products extends TimestampEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'user_name', nullable: false })
   name: string;
 
-  @Column({ name: 'price', default: 0, })
+  @Column({ name: 'price', default: 0 })
   price: number;
-
-  @CreateDateColumn({ name: 'create_at' })
-  createAt!: Date;
-  @UpdateDateColumn({ name: 'update_at' })
-  updateAt!: Date;
 }
 
