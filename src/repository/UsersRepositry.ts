@@ -27,4 +27,9 @@ export default class UsersRepository {
       }
     });
   }
+
+  public async createUsers(usersEntity: Users) {
+    const repository = getManager().getRepository(Users);
+    repository.insert(usersEntity);
+  }
 };

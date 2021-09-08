@@ -15,25 +15,28 @@ export default class UsersController {
     return res.json(result);
   };
 
-  @Get('/:id')
+  @Post('/sign-in')
   public async getUser(req: Request, res: Response) {
+    console.log(req.body);
     const {
-      userId,
-    } = req.params;
+      name,
+      password,
+    } = req.body;
 
     const result = await this.userService.getUserById(userId);
 
     return res.json(result);
   };
 
-  @Post('/createUser')
+  @Post('/sign-up')
   public async createUser(req: Request, res: Response) {
     const {
       name,
+      password,
       gender,
     } = req.body;
     
-    return res.json(await this.userService.createUsers(name, gender));
+    return res.json(await this.userService.createUsers(name, password, gender));
   }
 }
 

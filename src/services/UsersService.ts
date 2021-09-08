@@ -1,3 +1,5 @@
+import UserSignUpDto from "@/domains/dto/UserSignUpDto";
+import Users from "@/domains/entity/Users";
 import UsersRepository from "../repository/UsersRepositry";
 
 export default class UserService {
@@ -11,12 +13,12 @@ export default class UserService {
     return await this.usersRepository.findById(userId);
   }
 
-  public async createUsers(name:string, gender:number) {
-    const alreadyUser = await this.usersRepository.usersByName(name);
+  public async createUsers(usersSignUpDto: UserSignUpDto) {
+    const alreadyUser = await this.usersRepository.usersByName(usersSignUpDto.username);
     if(alreadyUser) {
       return '이미 있는 회원입니다.';
     } else {
-      return '회원가입 가능';
+      await this.usersRepository.createUsers(Users.createUserFromSignDto(usersSignUpDto));
     }
   }
   
