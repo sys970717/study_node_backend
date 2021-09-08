@@ -1,3 +1,4 @@
+import UserSignUpDto from "@/domains/dto/UserSignUpDto";
 import { Request, Response } from "express";
 import { Controller } from "../../config/decorators/Controller";
 import { Get } from "../../config/decorators/Get";
@@ -35,8 +36,10 @@ export default class UsersController {
       password,
       gender,
     } = req.body;
+
+    const usersSignUpDto = new UserSignUpDto(name, password, gender);
     
-    return res.json(await this.userService.createUsers(name, password, gender));
+    return res.json(await this.userService.createUsers(usersSignUpDto));
   }
 }
 
