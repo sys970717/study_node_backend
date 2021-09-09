@@ -5,16 +5,20 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import NotFoundError from './domains/errors/NotFoundError';
 import FormSyntaxError from './domains/errors/FormSyntaxError';
+import Logger from './util/Logger';
 
 dotenv.config();
 
 class App {
     public application : express.Application;
-    
     constructor() {
         this.application = express();
     }
 }
+
+process.on('uncaughtException', (e) => {
+  Logger.error(e);
+});
 
 const app = new App().application;
 
