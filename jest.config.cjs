@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-undef
-export default {
+module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   setupFilesAfterEnv: ['./__tests__/tools/setup-env.js', './__tests__/tools/global-suite-configure.ts'],

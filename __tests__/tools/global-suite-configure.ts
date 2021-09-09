@@ -1,20 +1,35 @@
-// import ctx from "@/app-context";
+import ctx from "@/app-context";
 // import { testCtx } from "@tools/test-context";
 
-import { Connection, createConnection } from "typeorm";
+import { createConnection, getConnection } from "typeorm";
 import { connectionOptions } from "../../src/config/databases/testDatabase";
 
-let connection:Connection;
+const connection = {
+  async create(){
+    await createConnection(connectionOptions);
+  },
 
-beforeAll(() => {
-  createConnection(connectionOptions).then(async connection => {
-    connection = connection;
-    console.log(`DB connection = ${connection.isConnected}`);
-  });
+  async close(){
+    await getConnection().close(); 
+  },
+
+  async clear(){
+    const connection = getConnection();
+    const entities = connection.entityMetadatas;
+
+    entities.forEach(async (entity) => {
+      const repository = connection.getRepository(entity.name);
+      await repository.query(`DELETE FROM ${entity.tableName}`);
+    });
+  },
+};
+
+beforeAll(async () => {
+  await connection.create();
 });
 
 afterAll(async () => {
-  // closeDB();
-  // close();
   await connection.close();
 });
+
+export default connection;

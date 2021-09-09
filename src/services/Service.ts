@@ -1,5 +1,13 @@
+import UsersRepository from "@/repository/UsersRepository";
+import { Connection } from "typeorm";
+import UsersService from "./UsersService";
+
 export type ServiceContext = {
-  transaction: <T>(callbackFn: (transaction) => Promise<T>, isSerializable?: boolean) => Promise<T>;
+  usersService: UsersService;
+  usersRepository: UsersRepository;
+
+  dbconn: Promise<Connection>;
+  // transaction: <T>(callbackFn: (transaction) => Promise<T>, isSerializable?: boolean) => Promise<T>;
 };
 
 export default class Service {
