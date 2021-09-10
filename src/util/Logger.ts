@@ -1,9 +1,8 @@
-import { createLogger, transports, format } from 'winston';
+import winston from 'winston';
 import dailyRotateFile from 'winston-daily-rotate-file';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
-import winston from 'winston/lib/winston/config';
 
 dotenv.config();
 const { NODE_ENV, LOG_DIR } = process.env;
@@ -11,8 +10,26 @@ const { NODE_ENV, LOG_DIR } = process.env;
 const logDir = LOG_DIR || path.resolve('logs');;
 const logLevel = NODE_ENV === 'production' ? 'info' : 'debug';
 
+const levels = {
+  error: 0,
+  trace: 1,
+  warn: 2,
+  http: 3,
+  info: 4,
+  debug: 5,
+};
+
+const colors = {
+  error: 'red',
+  warn: 'yellow',
+  info: 'green',
+  http: 'magenta',
+  debug: 'white',
+  trace: 'violet',
+}
+
 // Define log format
-const logFormat = format.printf(info => {
+const logFormat = winston.format.printf(info => {
   return `${info.timestamp} ${info.level}: ${info.message}`;
 });
 
@@ -39,11 +56,18 @@ const options = {
   }
 }
 
-const logger = createLogger({
-  format: format.combine(
-    format.timestamp({
+const level = ():string => {
+  return (NODE_ENV === 'development' ? 'debug' : 'info');
+}
+
+const logger = winston.createLogger({
+  level: level(),
+  levels,
+  format: winston.format.combine(
+    winston.format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss',
     }),
+    winston.format.colorize({ all: true }),
     logFormat,
   ),
   transports: [
@@ -65,10 +89,11 @@ const logger = createLogger({
 });
 
 if (NODE_ENV !== "production") {
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),  // 색깔 넣어서 출력
-      format.simple(),  // `${info.level}: ${info.message} JSON.stringify({ ...rest })` 포맷으로 출력
+  logger.add(new winston.transports.Console({
+    format: winston.format.combine(
+      logFormat,
+      winston.format.colorize(),  // 색깔 넣어서 출력
+      // winston.format.simple(),  // `${info.level}: ${info.message} JSON.stringify({ ...rest })` 포맷으로 출력
     )
   }));
   logger.debug("Logging initialized at debug level");

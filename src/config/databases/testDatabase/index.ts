@@ -3,6 +3,7 @@ import { Connection, ConnectionOptions, createConnection, getConnection, getConn
 import dotenv from 'dotenv';
 import path from 'path';
 import Users from "../../../domains/entity/Users";
+import logger from "../../../util/Logger";
 
 const __dirname = path.resolve();
 
@@ -56,7 +57,7 @@ export const testDatabase = async() => {
   const connectionManager = getConnectionManager();
   let connection:Connection;
   const hasConnection = connectionManager.has('default');
-  console.log(`>>>> ${hasConnection}`);
+  logger.info(`>>>> ${hasConnection}`);
   if(hasConnection) {
     connection = getConnection();
     if(!connection.isConnected) {

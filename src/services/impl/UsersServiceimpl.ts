@@ -1,4 +1,4 @@
-import UserLoginDto from "@/domains/dto/UserLoginDto";
+import UserLoginDto from "../../domains/dto/UserLoginDto";
 import UserSignUpDto from "../../domains/dto/UserSignUpDto";
 import Users from "../../domains/entity/Users";
 import Service from "../Service";
