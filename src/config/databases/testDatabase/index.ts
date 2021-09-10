@@ -36,7 +36,7 @@ export const connectionOptions:ConnectionOptions = {
   username: env.DB_USER || 'test',
   password: env.DB_PASSWORD || 'test1234',
   database: CONNECTION_NAME,
-  synchronize: true,
+  synchronize: false, // don't create table always
   logging: false,
   entities: [
     // entityDir

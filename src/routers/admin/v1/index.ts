@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { RouteDefinition } from '../../config/RouteDefinition';
-import GoodsController from './GoodsController';
-import { asyncHandler } from '../../util/asyncHandler';
-import UsersController from './UsersController';
+import { RouteDefinition } from '../../../config/RouteDefinition';
+import CategoryController from './CategoryController';
+import { asyncHandler } from '../../../util/asyncHandler';
+// import AdminUserController from './AdminUserController';
 
 const router = Router();
 
 [
-  GoodsController, UsersController,
+  CategoryController,
+  // AdminUserController,
 ].forEach(controller => {
   // This is our instantiated class
   const instance = new controller();

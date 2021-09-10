@@ -20,17 +20,16 @@ export default class Goods extends TimestampEntity {
   @Column({ name: 'price', default: 0, comment: '정가', nullable: false })
   price: number;
 
-  @Column({ name: 'is_show', default: true, comment: '노출여부', nullable: false, length: 1 })
+  @Column({ name: 'is_show', default: true, comment: '노출여부', nullable: false, })
   @Index('goods-show-idx')
   isShow: boolean
 
   @Column({ name: 'description', comment: '상품설명', type: 'text'  })
   description: string
   
-  @ManyToOne(type => Category, (category) => category.id)
-  @Column({ name: 'category_id' })
+  @ManyToOne(type => Category, category => category.id)
+  @JoinColumn({ name: 'category_id' })
   category: Category;
-  // category: number;
 
   static ofForCreate(name: string, price: number, isShow = true , category: Category, description?: string) {
     const instance = new Goods();

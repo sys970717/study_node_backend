@@ -24,10 +24,10 @@ process.on('uncaughtException', (error) => {
 });
 
 const server = async (): Promise<void> => {
-  createConnection(connectionOptions).then(async connection => {
-    logger.debug(`DB connection = ${connection.isConnected}`);
+  // createConnection(connectionOptions).then(async connection => {
+    // logger.debug(`DB connection = ${connection.isConnected}`);
     app.listen(port, () => logger.info(`listening ${port}`));
-  });
+  // }).catch(err => logger.error('DBError', err));
 };
 
 server();

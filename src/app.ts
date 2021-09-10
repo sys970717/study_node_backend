@@ -1,6 +1,7 @@
 import express, { ErrorRequestHandler } from 'express';
 import 'reflect-metadata';
 import v1Router from './routers/v1/index';
+import AdminRouterV1 from './routers/admin/v1';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import NotFoundError from './domains/errors/NotFoundError';
@@ -33,6 +34,7 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(morganMiddleware);
 app.use('/v1', v1Router);
+app.use('/admin/v1', AdminRouterV1);
 app.use('/fe', express.static(__dirname + '/public'));
 
 const errorHandler = (err, req, res, next) : ErrorRequestHandler => {

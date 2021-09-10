@@ -5,9 +5,9 @@ export default class CategoryDto {
   public name: string;
   public sort: number;
   public description: string;
-  public isShow: Boolean;
+  public isShow: boolean;
 
-  constructor(id?: number, name?: string, sort?: number, description?: string, isShow:Boolean = true) {
+  constructor(id?: number, name?: string, sort?: number, description?: string, isShow = true) {
     this.id = id;
     this.name = name;
     this.sort = sort;
