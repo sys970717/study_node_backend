@@ -1,4 +1,4 @@
-import Users from "../entity/Users";
+import Users from '../entity/Users';
 
 const GENDER_TYPE = {
   female: 0,

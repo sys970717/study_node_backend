@@ -7,8 +7,11 @@ import NotFoundError from './domains/errors/NotFoundError';
 import FormSyntaxError from './domains/errors/FormSyntaxError';
 import Logger from './util/Logger';
 import morganMiddleware from './util/morganMiddleware';
+import path from 'path';
 
 dotenv.config();
+
+const __dirname = path.resolve();
 
 class App {
     public application : express.Application;
@@ -29,16 +32,18 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use(morganMiddleware);
-app.use("/v1", v1Router);
+app.use('/v1', v1Router);
+app.use('/fe', express.static(__dirname + '/public'));
 
 const errorHandler = (err, req, res, next) : ErrorRequestHandler => {
     Logger.error(err);
     const obj = {
         debug: true,
-        code: 500,
+        code: err.code || 500,
         message: err.message,
         stack: err.stack,
         user: undefined,
+        date: (new Date()).toISOString(),
     };
     if(process.env.NODE_ENV === 'production') {
         delete obj.debug;
@@ -47,14 +52,16 @@ const errorHandler = (err, req, res, next) : ErrorRequestHandler => {
         obj.user = req.user;
     }
 
+    console.log(obj);
+
     if(err instanceof FormSyntaxError) {
         obj.code = 400;
-        return res.status(200).json(obj);
+        return res.status(200).send(obj);
     } else if (err instanceof NotFoundError) {
         obj.code = 404;
-        return res.status(obj.code).json(obj);
+        return res.status(obj.code).send(obj);
     } else {
-        return res.status(obj.code).json(obj);
+        return res.status(obj.code).send({ ...obj });
     }
 };
 app.use(errorHandler);

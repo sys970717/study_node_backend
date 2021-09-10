@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { RouteDefinition } from '../../config/RouteDefinition';
-import ProductsController from './ProductsController';
-import { asyncHandler } from "../../util/asyncHandler";
+import ProductsController from './GoodsController';
+import { asyncHandler } from '../../util/asyncHandler';
 import UsersController from './UsersController';
 
 const router = Router();

@@ -1,8 +1,8 @@
 'use strict';
 
-import Users from "../../domains/entity/Users";
-import { getManager } from "typeorm";
-import UsersRepository from "../UsersRepository";
+import Users from '../../domains/entity/Users';
+import { getManager } from 'typeorm';
+import UsersRepository from '../UsersRepository';
 
 export default class UsersRepositoryImpl implements UsersRepository {
   public async findAll(): Promise<Users[]> {

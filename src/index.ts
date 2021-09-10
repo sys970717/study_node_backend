@@ -1,9 +1,8 @@
 import 'module-alias/register';
 import { createConnection } from 'typeorm';
-import app from "./app";
-import connection from './config/databases/db-context';
+import app from './app';
 import { cpus } from 'os';
-// import { connectionOptions } from './config/databases/testDatabase';
+import { connectionOptions } from './config/databases/testDatabase';
 import logger from './util/Logger';
 
 const port: number = Number(process.env.WEB_PORT) || 3000;
@@ -25,8 +24,10 @@ process.on('uncaughtException', (error) => {
 });
 
 const server = async (): Promise<void> => {
-  await connection;
-  app.listen(port, () => logger.info(`listening ${port}`));
+  createConnection(connectionOptions).then(async connection => {
+    logger.debug(`DB connection = ${connection.isConnected}`);
+    app.listen(port, () => logger.info(`listening ${port}`));
+  });
 };
 
 server();

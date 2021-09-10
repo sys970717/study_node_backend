@@ -1,4 +1,4 @@
-import Users from "../entity/Users";
+import Users from '../entity/Users';
 
 export default class UserLoginDto {
   public username:string;

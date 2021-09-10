@@ -1,7 +1,6 @@
 'use strict';
 
-import Users from "../domains/entity/Users";
-import { getManager } from "typeorm";
+import Users from '../domains/entity/Users';
 
 export default interface UsersRepository {
   findAll(): Promise<Users[]>;

@@ -1,12 +1,10 @@
 import app from '@/app';
-import ctx from "@/app-context";
-import { ServiceContext } from '@/services/Service'
+import ctx from '@/app-context';
 import supertest from 'supertest';
 import { DEFAULT_PAYLOAD, encodePayload } from '../tools/for_http';
 
 import UserSignUpDto from '@/domains/dto/UserSignUpDto';
 import UserLoginDto from '@/domains/dto/UserLoginDto';
-import Users from '@/domains/entity/Users';
 
 const request = supertest(app);
 

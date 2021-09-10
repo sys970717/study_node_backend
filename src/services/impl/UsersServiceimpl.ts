@@ -1,8 +1,8 @@
-import UserLoginDto from "../../domains/dto/UserLoginDto";
-import UserSignUpDto from "../../domains/dto/UserSignUpDto";
-import Users from "../../domains/entity/Users";
-import Service from "../Service";
-import UsersService from "../UsersService";
+import UserLoginDto from '../../domains/dto/UserLoginDto';
+import UserSignUpDto from '../../domains/dto/UserSignUpDto';
+import Users from '../../domains/entity/Users';
+import Service from '../Service';
+import UsersService from '../UsersService';
 
 export default class UsersServiceImpl extends Service implements UsersService {
   public async getUsers(): Promise<Users[]> {

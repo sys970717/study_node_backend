@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import path from 'path';
 import Users from "../../../domains/entity/Users";
 import logger from "../../../util/Logger";
+import Goods from "../../../domains/entity/Goods";
+import Category from "../../../domains/entity/Category";
 
 const __dirname = path.resolve();
 
@@ -38,8 +40,9 @@ export const connectionOptions:ConnectionOptions = {
   logging: false,
   entities: [
     // entityDir
+    Category,
     Users,
-    // Products,
+    Goods,
   ],
   migrations: [
     path.join(__dirname, './**/migrations/*.js'),

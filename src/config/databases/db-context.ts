@@ -1,6 +1,6 @@
-import logger from "../../util/Logger";
-import { createConnection } from "typeorm";
-import * as testDBConnect from "./testDatabase";
+import logger from '../../util/Logger';
+import { createConnection } from 'typeorm';
+import * as testDBConnect from './testDatabase';
 
 const dbConn = createConnection(testDBConnect.connectionOptions).then(async connection => {
   logger.debug(`DB connection = ${connection.isConnected}`);
