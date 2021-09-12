@@ -19,6 +19,9 @@ export default class Category extends TimestampEntity {
   @Column({ name: 'isShow', default: true, nullable: false, comment: '노출여부' })
   isShow: Boolean;
 
+  @Column({ name: 'categoryRef', nullable: true, comment: '상위 카테고리 코드' })
+  categoryRef: number;
+
   @OneToMany((type) => Goods, (goods) => goods.category)
   goods?: Goods[];
 
