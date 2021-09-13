@@ -17,7 +17,7 @@ export default class Category extends TimestampEntity {
   description: string;
 
   @Column({ name: 'isShow', default: true, nullable: false, comment: '노출여부' })
-  isShow: Boolean;
+  isShow: boolean;
 
   @Column({ name: 'categoryRef', nullable: true, comment: '상위 카테고리 코드' })
   categoryRef: number;
@@ -25,13 +25,14 @@ export default class Category extends TimestampEntity {
   @OneToMany((type) => Goods, (goods) => goods.category)
   goods?: Goods[];
 
-  static ofForCreate(categoryName: string, id?: number, categorySortNumber?: number, description?: string, isShow: Boolean = true) {
+  static ofForCreate(categoryName: string, id?: number, categorySortNumber?: number, description?: string, isShow = true, categoryRef?: number) {
     const instance = new Category();
     instance.id = id;
     instance.categoryName = categoryName;
     instance.categorySortNumber = categorySortNumber;
     instance.description = description;
     instance.isShow = isShow;
+    instance.categoryRef = categoryRef;
     return instance;
   }
 }

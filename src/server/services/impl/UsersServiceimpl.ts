@@ -3,6 +3,7 @@ import UserSignUpDto from '../../domains/dto/UserSignUpDto';
 import Users from '../../domains/entity/Users';
 import Service from '../Service';
 import UsersService from '../UsersService';
+import bcrypt from 'bcrypt';
 
 export default class UsersServiceImpl extends Service implements UsersService {
   public async getUsers(): Promise<Users[]> {
@@ -23,6 +24,7 @@ export default class UsersServiceImpl extends Service implements UsersService {
     if(alreadyUser) {
       return '이미 있는 회원입니다.';
     }
+
     const users = await this.ctx.usersRepository.createUsers(Users.createUserFromSignDto(usersSignUpDto));
     return UserSignUpDto.ofForResponse(users);
   }

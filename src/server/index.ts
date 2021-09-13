@@ -1,7 +1,7 @@
 import 'module-alias/register';
-import { createConnection } from 'typeorm';
 import app from './app';
 import { cpus } from 'os';
+import { createConnection } from 'typeorm';
 import { connectionOptions } from './config/databases/testDatabase';
 import logger from './util/Logger';
 
