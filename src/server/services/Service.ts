@@ -1,6 +1,6 @@
 import CategoryRepository from '../repository/admin/CategoryRepository';
-import GoodsRepository from '@/repository/GoodsRepository';
-import UsersRepository from '@/repository/UsersRepository';
+import GoodsRepository from '../repository/GoodsRepository';
+import UsersRepository from '../repository/UsersRepository';
 import { Connection } from 'typeorm';
 import CategoryService from './admin/v1/CategoryService';
 import GoodsService from './GoodsService';
