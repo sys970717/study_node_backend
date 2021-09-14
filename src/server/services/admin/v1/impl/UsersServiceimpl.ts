@@ -1,11 +1,11 @@
-import UserLoginDto from '../../domains/dto/UserLoginDto';
-import UserSignUpDto from '../../domains/dto/UserSignUpDto';
-import Users from '../../domains/entity/Users';
-import Service from '../Service';
-import UsersService from '../UsersService';
+import UserLoginDto from '../../../../domains/dto/UserLoginDto';
+import UserSignUpDto from '../../../../domains/dto/UserSignUpDto';
+import Users from '../../../../domains/entity/Users';
+import AdminService from '../../AdminService';
+import UsersService from '../../../UsersService';
 import bcrypt from 'bcrypt';
 
-export default class UsersServiceImpl extends Service implements UsersService {
+export default class UsersServiceImpl extends AdminService implements UsersService {
   public async getUsers(): Promise<Users[]> {
     return await this.ctx.usersRepository.findAll();
   }

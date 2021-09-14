@@ -26,7 +26,6 @@ export default class Users extends TimestampEntity {
   @Column({ name: 'cash', nullable: true, type: 'bigint' })
   cash: number;
 
-
   static createUserFromSignDto(userSignUpDto: UserSignUpDto) {
     userSignUpDto.createUserPasswordByBcrypt();
     
@@ -37,6 +36,5 @@ export default class Users extends TimestampEntity {
     instance.salt = userSignUpDto.salt;
 
     return instance;
-  }
+  };
 };
-

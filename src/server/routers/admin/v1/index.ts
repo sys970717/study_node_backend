@@ -2,11 +2,13 @@ import { NextFunction, Request, Response, Router } from 'express';
 import { RouteDefinition } from '../../../config/RouteDefinition';
 import CategoryController from './CategoryController';
 import { asyncHandler } from '../../../util/asyncHandler';
+import UsersController from './UsersController';
 // import AdminUserController from './AdminUserController';
 
 const router = Router();
 
 [
+  UsersController,
   CategoryController,
   // AdminUserController,
 ].forEach(controller => {

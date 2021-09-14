@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import ctx from "../../../app-context";
+import ctx from "../../../app-admin-context";
 import { Controller } from '../../../config/decorators/Controller';
 import { Get } from "../../../config/decorators/Get";
 import { Post } from '../../../config/decorators/Post';

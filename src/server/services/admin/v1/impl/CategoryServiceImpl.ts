@@ -1,10 +1,10 @@
 import CategoryDto from "../../../../domains/dto/CategoryDto";
 import Category from "../../../../domains/entity/Category";
-import Service from "../../../Service";
+import AdminService from "../../AdminService";
 import CategoryService from "../CategoryService";
 import Logger from '../../../../util/Logger';
 
-export default class CategoryServiceImpl extends Service implements CategoryService {
+export default class CategoryServiceImpl extends AdminService implements CategoryService {
   public async getList(show?: boolean): Promise<CategoryDto[]> {
     throw new Error("Method not implemented.");
   }

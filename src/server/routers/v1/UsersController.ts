@@ -8,17 +8,10 @@ import UserLoginDto from '../../domains/dto/UserLoginDto';
 import logger from '../../util/Logger';
 import FormSyntaxError from '../../domains/errors/FormSyntaxError';
 import { DELETE } from '../../config/decorators/DELETE';
+import * as ApiResponse from '../..//domains/dto/Response'
 
 @Controller('/users')
 export default class UsersController {
-  @Get('/')
-  public async userList(req: Request, res: Response) {
-    const result = await ctx.usersService.getUsers();
-    logger.info('asdfasdf');
-
-    return res.json(result);
-  };
-
   @Post('/sign-in')
   public async getUser(req: Request, res: Response, next:NextFunction) {
     const {
@@ -34,7 +27,15 @@ export default class UsersController {
 
     const userLoginDto = UserLoginDto.ofForSignIn(name, password);
 
-    return res.json(await ctx.usersService.login(userLoginDto));
+    const r: ApiResponse.IResponse = {
+      code: 200,
+      success: true,
+      data: {
+        ...(await ctx.usersService.login(userLoginDto)),
+      },
+    }
+
+    return res.json(r);
   };
 
   @Post('/sign-up')
