@@ -37,5 +37,4 @@ export default class UsersServiceImpl extends AdminService implements UsersServi
   public async removeByName(userName: string) {
     return await this.ctx.usersRepository.removeByName(userName);
   }
-  
 }

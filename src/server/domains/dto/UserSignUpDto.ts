@@ -23,9 +23,7 @@ export default class UserSignUpDto {
 
   public createUserPasswordByBcrypt() {
     const salt = bcrypt.genSaltSync(9.3)
-    console.log(`SALT > ${salt}`);
     const hash = bcrypt.hashSync(this.password, salt);
-    console.log(`PASS > ${hash}`);
     this.salt = salt;
     this.password = hash;
   }

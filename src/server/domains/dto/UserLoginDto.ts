@@ -11,14 +11,13 @@ export default class UserLoginDto {
   constructor(username: string, password: string, id?: number, cash?: number) {
     this.username = username;
     this.password = password;
-    this.id = id ? id : null;
-    this.cash = cash ? cash : 0;
-  }
+    this.id = id;
+    this.cash = Number(cash) || 0;
+  }  
 
   public compareSyncUserPassword(encryptPassword: string, salt?: string): boolean {
     return bcrypt.compareSync(this.password, encryptPassword);
   }
-
 
   static ofForSignIn(username:string, password:string): UserLoginDto {
     return new UserLoginDto(username, password);

@@ -1,10 +1,11 @@
 'use strict';
 
 import Users from '../../domains/entity/Users';
-import { getManager } from 'typeorm';
+import { EntityRepository, getManager, Repository } from 'typeorm';
 import UsersRepository from '../UsersRepository';
 
-export default class UsersRepositoryImpl implements UsersRepository {
+@EntityRepository(Users)
+export default class UsersRepositoryImpl extends Repository<Users> implements UsersRepository {
   public async findAll(): Promise<Users[]> {
     const repository = getManager().getRepository(Users);
     const users: Users[] = await repository.find();

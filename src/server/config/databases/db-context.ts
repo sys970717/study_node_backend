@@ -7,6 +7,11 @@ const dbConn = createConnection(testDBConnect.connectionOptions).then(async conn
   return connection;
 });
 
+// const dbConn = testDBConnect.testDatabase().then(async connection => {
+//   logger.debug(`DB connection = ${connection.isConnected}`);
+//   return connection;
+// });
+
 // export const initTransaction;
 
 export default dbConn;

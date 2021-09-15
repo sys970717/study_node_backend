@@ -6,6 +6,7 @@ import Users from "../../../domains/entity/Users";
 import logger from "../../../util/Logger";
 import Goods from "../../../domains/entity/Goods";
 import Category from "../../../domains/entity/Category";
+import UsersPassword from "../../../domains/entity/UsersPassword";
 
 const __dirname = path.resolve();
 
@@ -23,9 +24,9 @@ const CONNECTION_NAME = 'test';
 
 let entityDir = '';
 if (env.NODE_ENV !== 'production') {
-  entityDir = path.join(__dirname, '..', '..', '..', '../src', '/domains/entity/*.ts');
+  entityDir = path.join(__dirname, '..', '..', '..', '../src/server', '/domains/entity/*.ts');
 } else {
-  entityDir = path.join(__dirname, '..', '..', '..', '../dist', '/domains/entity/*.js');
+  entityDir = path.join(__dirname, '..', '..', '..', '../dist/server', '/domains/entity/*.js');
 }
 
 export const connectionOptions:ConnectionOptions = {
@@ -36,13 +37,14 @@ export const connectionOptions:ConnectionOptions = {
   username: env.DB_USER || 'test',
   password: env.DB_PASSWORD || 'test1234',
   database: CONNECTION_NAME,
-  synchronize: false, // don't create table always
+  synchronize: true, // don't create table always
   logging: false,
   entities: [
     // entityDir
     Category,
     Users,
     Goods,
+    // UsersPassword,
   ],
   migrations: [
     path.join(__dirname, './**/migrations/*.js'),
@@ -60,7 +62,7 @@ export const testDatabase = async() => {
   const connectionManager = getConnectionManager();
   let connection:Connection;
   const hasConnection = connectionManager.has('default');
-  logger.info(`>>>> ${hasConnection}`);
+  logger.info(`DB has connection > ${hasConnection}`);
   if(hasConnection) {
     connection = getConnection();
     if(!connection.isConnected) {
