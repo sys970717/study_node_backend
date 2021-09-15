@@ -19,7 +19,7 @@ export default class UsersServiceImpl extends Service implements UsersService {
     if(!existUsers) {
       return null;
     }
-    if(usersDto.compareSyncUserPassword(existUsers.password, existUsers.salt)) {
+    if(usersDto.compareSyncUserPassword(existUsers.passwordInfo.password, existUsers.passwordInfo.salt)) {
       return UserLoginDto.ofForResponse(existUsers)
     };
   }

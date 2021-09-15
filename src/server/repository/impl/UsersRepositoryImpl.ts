@@ -8,7 +8,9 @@ import UsersRepository from '../UsersRepository';
 export default class UsersRepositoryImpl extends Repository<Users> implements UsersRepository {
   public async findAll(): Promise<Users[]> {
     const repository = getManager().getRepository(Users);
-    const users: Users[] = await repository.find();
+    const users: Users[] = await repository.createQueryBuilder('users')
+    .leftJoinAndSelect('users.passwordInfo', 'users_password')
+    .getMany();
     return users;
   }
 
@@ -21,11 +23,20 @@ export default class UsersRepositoryImpl extends Repository<Users> implements Us
 
   public async usersByName(name:string): Promise<Users> {
     const repository = getManager().getRepository(Users);
-    return await repository.findOne({
-      where: {
-        name,
-      }
-    });
+
+    const user = await repository.createQueryBuilder('users')
+    .leftJoinAndSelect('users.passwordInfo', 'users_password')
+    .where('users.name = :name', { name })
+    .getOne();
+
+    // const user = await repository.find({
+    //   relations: ['users_password'],
+    //   where: {
+    //     name,
+    //   }
+    // });
+    
+    return await user;
   }
 
   public async createUsers(usersEntity: Users) {

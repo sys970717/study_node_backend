@@ -4,9 +4,6 @@ import TimestampEntity from './TimestampEntity';
 
 @Entity({ name: 'category'})
 export default class Category extends TimestampEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
-
   @Column({ name: 'category_name', nullable: false, unique: true, comment: '카테고리 명' })
   categoryName: string;
 

@@ -19,7 +19,7 @@ export default class UsersServiceImpl extends AdminService implements UsersServi
     if(!existUsers) {
       return null;
     }
-    if(usersDto.compareSyncUserPassword(existUsers.password, existUsers.salt)) {
+    if(usersDto.compareSyncUserPassword(existUsers.passwordInfo.password, existUsers.passwordInfo.salt)) {
       return UserLoginDto.ofForResponse(existUsers)
     };
   }

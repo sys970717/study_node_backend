@@ -38,13 +38,14 @@ export const connectionOptions:ConnectionOptions = {
   password: env.DB_PASSWORD || 'test1234',
   database: CONNECTION_NAME,
   synchronize: true, // don't create table always
-  logging: false,
+  logging: true,
+  timezone: 'Z',
   entities: [
     // entityDir
     Category,
     Users,
     Goods,
-    // UsersPassword,
+    UsersPassword,
   ],
   migrations: [
     path.join(__dirname, './**/migrations/*.js'),
@@ -67,9 +68,11 @@ export const testDatabase = async() => {
     connection = getConnection();
     if(!connection.isConnected) {
       connection = await createConnection(connectionOptions);
+      logger.info(`[RECONNECT] DB has connection > ${connectionManager.has('default')}`);
     }
   } else {
     connection = await createConnection(connectionOptions);
+    logger.info(`[NEW CONNECT] DB has connection > ${connectionManager.has('default')}`);
   }
 
   return connection;

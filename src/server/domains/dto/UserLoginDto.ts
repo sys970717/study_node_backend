@@ -24,7 +24,7 @@ export default class UserLoginDto {
   }
 
   static ofForResponse(users: Users): UserLoginDto {
-    const user = new UserLoginDto(users.name, users.password, users.id, users.cash || 0);
+    const user = new UserLoginDto(users.name, users.passwordInfo.password, users.id, users.cash || 0);
     delete user.password;
     return user;
   }

@@ -11,9 +11,6 @@ import TimestampEntity from './TimestampEntity';
 
 @Entity({ name: 'goods' })
 export default class Goods extends TimestampEntity {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
-  id: number;
-
   @Column({ name: 'user_name', nullable: false, comment: '상품명' })
   name: string;
 

@@ -4,13 +4,8 @@ export default class TimestampEntity extends BaseEntity{
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @CreateDateColumn({ name: 'created_at'})
+  @CreateDateColumn({ name: 'created_at', readonly: true })
   createdAt!: Date;
   @UpdateDateColumn({ name: 'updated_at'})
   updatedAt!: Date;
-
-  @BeforeUpdate()
-  public setUpdateDate(): void {
-    this.updatedAt = new Date();
-  }
 }
