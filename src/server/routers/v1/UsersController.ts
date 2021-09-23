@@ -12,7 +12,14 @@ import * as ApiResponse from '../..//domains/dto/Response'
 
 @Controller('/users')
 export default class UsersController {
-  @Post('/sign-in')
+  @Get('/session')
+  public async getUserInfo(req: Request, res: Response, next:NextFunction) {
+    // const {
+
+    // } = req.cookie
+  }
+
+  @Post('/session')
   public async getUser(req: Request, res: Response, next:NextFunction) {
     const {
       name,
@@ -38,7 +45,7 @@ export default class UsersController {
     return res.json(r);
   };
 
-  @Post('/sign-up')
+  @Post('/signup')
   public async createUser(req: Request, res: Response, next:NextFunction) {
     const {
       name,
@@ -46,7 +53,7 @@ export default class UsersController {
       gender,
     } = req.body;
 
-    logger.debug(req.body);
+    logger.debug(`${req.inboundIp}`, req.body);
 
     if(!name || name.length <= 1) {
       return next('IllegalAccessError');
@@ -55,6 +62,8 @@ export default class UsersController {
     }
 
     const usersSignUpDto = UserSignUpDto.ofForRequestTrans(name, password, gender);
+    // TODO, 암호화 룰셋 적용하기.
+
     const signUser = await ctx.usersService.createUsers(usersSignUpDto);
     if(!(signUser instanceof UserSignUpDto)) {
       return res.status(400).send({ message: signUser });
@@ -64,7 +73,7 @@ export default class UsersController {
     return res.json(signUser);
   }
 
-  @DELETE('/:id')
+  @DELETE('/session')
   public async deleteUser(req: Request, res: Response, next:NextFunction) {
     const { id } = req.params;
 

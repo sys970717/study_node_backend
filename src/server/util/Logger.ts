@@ -1,8 +1,9 @@
 import winston from 'winston';
 import dailyRotateFile from 'winston-daily-rotate-file';
 import dotenv from 'dotenv';
-import fs from 'fs';
+import fs, { stat } from 'fs';
 import path from 'path';
+import { IncomingMessage, ServerResponse } from 'http';
 
 dotenv.config();
 const { NODE_ENV, LOG_DIR } = process.env;
@@ -97,6 +98,21 @@ if (NODE_ENV !== "production") {
     )
   }));
   logger.debug("Logging initialized at debug level");
-};
+}
+
+export function logRequest(req: IncomingMessage, res: ServerResponse) {
+  const ip = req.socket.remoteAddress;
+  const method = req.method;
+  const url = req.url;
+  req['_startAt'] = process.hrtime();
+
+  res.on('finish', () => {
+    const [sec, ns] = process.hrtime(req['_startAt']);
+    const responseTime = Math.floor(sec * 1e3 + ns * 1e-6);
+    const status = res.statusCode;
+
+    logger.http(`${ip} ${method} ${url} ${status} ${responseTime}`);
+  });
+}
 
 export default logger;
