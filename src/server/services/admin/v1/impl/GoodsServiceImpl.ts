@@ -1,0 +1,1 @@
+export default class GoodsServiceImpl implements GoodsService

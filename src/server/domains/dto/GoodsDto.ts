@@ -17,7 +17,7 @@ export default class GoodsDto {
     this.description = description;
   }
 
-  static of(name, price, category: CategoryDto, id) {
+  static of(name: string, price: number, category: CategoryDto, id: number) {
     const instance = new GoodsDto(name, price, category, id);
     return instance;
   }
