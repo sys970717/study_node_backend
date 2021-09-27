@@ -3,6 +3,7 @@ import { RouteDefinition } from '../../../config/RouteDefinition';
 import CategoryController from './CategoryController';
 import { asyncHandler } from '../../../util/asyncHandler';
 import UsersController from './UsersController';
+import GoodsController from './GoodsController';
 // import AdminUserController from './AdminUserController';
 
 const router = Router();
@@ -10,6 +11,7 @@ const router = Router();
 [
   UsersController,
   CategoryController,
+  GoodsController,
   // AdminUserController,
 ].forEach(controller => {
   // This is our instantiated class

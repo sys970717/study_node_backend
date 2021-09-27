@@ -32,7 +32,7 @@ export default class Goods extends TimestampEntity {
     const instance = new Goods();
     instance.name = name;
     instance.price = price;
-    instance.isShow = isShow,
+    instance.isShow = isShow;
     instance.category = category;
     instance.description = description;
     return instance;

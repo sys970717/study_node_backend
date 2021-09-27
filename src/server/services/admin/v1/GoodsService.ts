@@ -1,3 +1,5 @@
+import { IGoodsCreateDto } from "../../../domains/dto/IGoods";
+
 export default interface GoodsService {
-  createGoods(Goods)
+  createGoods(goodsDto: IGoodsCreateDto)
 }

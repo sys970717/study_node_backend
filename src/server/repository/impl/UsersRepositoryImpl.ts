@@ -28,13 +28,6 @@ export default class UsersRepositoryImpl extends Repository<Users> implements Us
     .leftJoinAndSelect('users.passwordInfo', 'users_password')
     .where('users.name = :name', { name })
     .getOne();
-
-    // const user = await repository.find({
-    //   relations: ['users_password'],
-    //   where: {
-    //     name,
-    //   }
-    // });
     
     return await user;
   }

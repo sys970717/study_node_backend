@@ -8,7 +8,7 @@ import UserLoginDto from '../../domains/dto/UserLoginDto';
 import logger from '../../util/Logger';
 import FormSyntaxError from '../../domains/errors/FormSyntaxError';
 import { DELETE } from '../../config/decorators/DELETE';
-import * as ApiResponse from '../..//domains/dto/Response'
+import * as ApiResponse from '../../domains/dto/Response'
 
 @Controller('/users')
 export default class UsersController {

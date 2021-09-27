@@ -80,7 +80,7 @@ app.use((req, res, next) => {
 });
 
 const errorHandler = (err, req, res, next) : ErrorRequestHandler => {
-  Logger.error(err);
+  Logger.error('API Error', err);
   const obj = {
     debug: true,
     code: err.code || 500,

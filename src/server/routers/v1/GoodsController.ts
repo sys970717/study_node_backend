@@ -26,7 +26,7 @@ export default class GoodsController {
     return res.json(result);
   }
 
-  @Post('/:id')
+  @Post('/')
   public createGoods(req: Request, res: Response) {
     const { id } = req.params;
     const { name } = req.body;

@@ -3,10 +3,15 @@ import UsersRepository from '../../repository/UsersRepository';
 import { Connection } from 'typeorm';
 import CategoryService from '../admin/v1/CategoryService';
 import UsersService from './v1/UsersService';
+import GoodsService from './v1/GoodsService';
+import GoodsRepository from '../../repository/admin/GoodsRepository';
 
 export type AdminServiceContext = {
   usersService: UsersService;
   usersRepository: UsersRepository;
+
+  goodsService: GoodsService;
+  goodsRepository: GoodsRepository;
 
   dbconn: Promise<Connection>;
 

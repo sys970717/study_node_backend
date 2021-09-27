@@ -18,12 +18,12 @@ process.on('unhandledRejection', (reason) => {
 });
 
 process.on('uncaughtException', (error) => {
-  logger.error(`uncaughtException >> ${JSON.stringify(error)}`);
+  logger.error(`uncaughtException`, error);
   logger.error('uncaughtException', (new Date()).toISOString(), error);
   process.exit(1);
 });
 
-const server = async (): Promise<void> => {
+const server = (): void => {
   // createConnection(connectionOptions).then(async connection => {
     // logger.debug(`DB connection = ${connection.isConnected}`);
     app.listen(port, () => logger.info(`listening ${port}`));

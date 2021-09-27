@@ -1,9 +1,12 @@
 import Goods from "@/domains/entity/Goods";
+import { EntityRepository, getManager } from "typeorm";
 import GoodsRepository from "../GoodsRepository";
 
+// @EntityRepository(Goods)
 export default class GoodsRepositoryImpl implements GoodsRepository {
-  createGoods(goods: Goods) {
-    throw new Error("Method not implemented.");
+  public async createGoods(goods: Goods) {
+    const repository = getManager().getRepository(Goods);
+    return await repository.save(goods);
   }
 
 }
