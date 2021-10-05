@@ -1,6 +1,6 @@
 import { BaseEntity, BeforeUpdate, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-export default class TimestampEntity extends BaseEntity{
+export default class BaseTimeEntity extends BaseEntity{
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 

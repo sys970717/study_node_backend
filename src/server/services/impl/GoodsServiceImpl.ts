@@ -2,8 +2,8 @@ import GoodsService from '../GoodsService';
 import Service from '../Service';
 import Logger from '../../util/Logger';
 import Goods from '../../domains/entity/Goods';
-import GoodsDto from '../../domains/dto/GoodsDto';
-import CategoryDto from '../../domains/dto/CategoryDto';
+import { GoodsDto } from '../../domains/dto/goods/IGoods';
+import CategoryDto from '../../domains/dto/category/CategoryDto';
 import Category from '../../domains/entity/Category';
 
 export default class GoodsServiceImpl extends Service implements GoodsService {
@@ -11,7 +11,7 @@ export default class GoodsServiceImpl extends Service implements GoodsService {
     const goods = await this.ctx.goodsRepository.inquiry();
 
     return goods.filter(g => g.isShow === true)
-      .map(o => GoodsDto.of(o.name, o.price, CategoryDto.ofCategoryEntity(o.category), o.id));;
+      .map(o => GoodsDto.of(o.name, o.price, CategoryDto.ofCategoryEntity(o.category), o.id));
   }
 
   public async createGoods(name: string, price: number, category: CategoryDto): Promise<GoodsDto> {

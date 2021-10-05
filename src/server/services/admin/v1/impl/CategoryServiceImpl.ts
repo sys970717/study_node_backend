@@ -1,4 +1,4 @@
-import CategoryDto from "../../../../domains/dto/CategoryDto";
+import CategoryDto from "../../../../domains/dto/category/CategoryDto";
 import Category from "../../../../domains/entity/Category";
 import AdminService from "../../AdminService";
 import CategoryService from "../CategoryService";

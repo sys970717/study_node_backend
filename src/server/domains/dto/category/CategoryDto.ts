@@ -1,4 +1,4 @@
-import Category from "../entity/Category";
+import Category from "../../entity/Category";
 
 export default class CategoryDto {
   public id: number;

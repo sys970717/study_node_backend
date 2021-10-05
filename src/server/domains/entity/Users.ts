@@ -6,11 +6,11 @@ import {
   JoinColumn,
 } from 'typeorm';
 import UserSignUpDto from '../dto/UserSignUpDto';
-import TimestampEntity from './TimestampEntity';
+import BaseTimeEntity from './BaseTimeEntity';
 import UsersPassword from './UsersPassword';
 
 @Entity({ name: 'users' })
-export default class Users extends TimestampEntity {
+export default class Users extends BaseTimeEntity {
   @Column({ unique: true, nullable: false, length: 50})
   name: string;
 

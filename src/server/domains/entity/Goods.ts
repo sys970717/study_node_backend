@@ -7,10 +7,10 @@ import {
   Index,
 } from 'typeorm';
 import Category from './Category';
-import TimestampEntity from './TimestampEntity';
+import BaseTimeEntity from './BaseTimeEntity';
 
 @Entity({ name: 'goods' })
-export default class Goods extends TimestampEntity {
+export default class Goods extends BaseTimeEntity {
   @Column({ name: 'user_name', nullable: false, comment: '상품명' })
   name: string;
 

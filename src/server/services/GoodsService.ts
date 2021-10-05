@@ -1,5 +1,5 @@
-import CategoryDto from '../domains/dto/CategoryDto';
-import GoodsDto from '../domains/dto/GoodsDto';
+import CategoryDto from '../domains/dto/category/CategoryDto';
+import { GoodsDto } from '../domains/dto/goods/IGoods';
 
 export default interface GoodsService {
   getGoodsList(show?: boolean): Promise<GoodsDto[]>;

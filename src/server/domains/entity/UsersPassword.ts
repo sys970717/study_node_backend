@@ -4,10 +4,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import TimestampEntity from './TimestampEntity';
+import BaseTimeEntity from './BaseTimeEntity';
 
 @Entity({name: 'users_password'})
-export default class UsersPassword extends TimestampEntity {
+export default class UsersPassword extends BaseTimeEntity {
   @Column({ name: 'password', nullable: false, length: 256 })
   password: string;
 

@@ -3,7 +3,7 @@ import ctx from "../../../app-admin-context";
 import { Controller } from '../../../config/decorators/Controller';
 import { Get } from "../../../config/decorators/Get";
 import { Post } from '../../../config/decorators/Post';
-import CategoryDto from '../../../domains/dto/CategoryDto';
+import CategoryDto from '../../../domains/dto/category/CategoryDto';
 
 @Controller('/category')
 export default class CategoryController {

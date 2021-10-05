@@ -1,10 +1,10 @@
-import CategoryDto from './CategoryDto';
+import CategoryDto from '../category/CategoryDto';
 
 // search
 export interface IGoodsSearchDto {
   price: number;
   name: string;
-  category: CategoryDto;
+  category?: CategoryDto;
   description?: string;
 }
 
@@ -44,7 +44,7 @@ export class GoodsDto {
   category: CategoryDto;
   description?: string;
 
-  private goodsId: number;
+  private readonly goodsId: number;
 
   constructor(name:string, category: CategoryDto, price: number, goodsId?: number, description?: string) {
     this.name = name;
@@ -62,5 +62,4 @@ export class GoodsDto {
   static ofForCreate(name: string, price: number, category: CategoryDto) {
     return new GoodsDto(name, category, price);
   }
-
 }

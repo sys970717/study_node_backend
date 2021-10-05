@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import Goods from './Goods';
-import TimestampEntity from './TimestampEntity';
+import BaseTimeEntity from './BaseTimeEntity';
 
 @Entity({ name: 'category'})
-export default class Category extends TimestampEntity {
+export default class Category extends BaseTimeEntity {
   @Column({ name: 'category_name', nullable: false, unique: true, comment: '카테고리 명' })
   categoryName: string;
 
