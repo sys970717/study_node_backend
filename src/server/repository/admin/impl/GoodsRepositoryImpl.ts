@@ -12,17 +12,17 @@ export default class GoodsRepositoryImpl implements GoodsRepository {
   }
 
   searchGoods(params: GoodsSearchRequest): Promise<[Goods[], number]> {
-    const queryBuilder = createQueryBuilder()
+    const repository = getManager().getRepository(Goods);
+    const queryBuilder = repository.createQueryBuilder('goods')
     .select([
       'goods.id',
       'goods.name',
       'goods.price',
       'goods.is_show',
-      'goods.category_id',
-      'category.*',
+      'category.id',
+      'category.name',
     ])
-    .from(Goods, 'goods')
-    .leftJoin(Category, 'category', 'goods.category_id = category.id')
+    .leftJoin('goods.category', 'category')
     .limit(params.getLimit())
     .offset(params.getOffset());
 

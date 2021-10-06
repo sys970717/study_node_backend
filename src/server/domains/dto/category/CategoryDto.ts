@@ -18,6 +18,6 @@ export default class CategoryDto {
   }
 
   static ofCategoryEntity(category: Category) {
-    return new CategoryDto(category.id, category.categoryName, category.categorySortNumber, category.description, category.isShow, category.categoryRef);
+    return new CategoryDto(category.id, category.name, category.categorySortNumber, category.description, category.isShow, category.categoryRef);
   }
 }

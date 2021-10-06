@@ -4,8 +4,8 @@ import BaseTimeEntity from './BaseTimeEntity';
 
 @Entity({ name: 'category'})
 export default class Category extends BaseTimeEntity {
-  @Column({ name: 'category_name', nullable: false, unique: true, comment: '카테고리 명' })
-  categoryName: string;
+  @Column({ name: 'name', nullable: false, unique: true, comment: '카테고리 명' })
+  name: string;
 
   @Column({ name: 'category_sort', default: 0, nullable: false, unique: false, comment: '카테고리 정렬순서' })
   categorySortNumber: number;
@@ -22,10 +22,10 @@ export default class Category extends BaseTimeEntity {
   @OneToMany((type) => Goods, (goods) => goods.category)
   goods?: Goods[];
 
-  static ofForCreate(categoryName: string, id?: number, categorySortNumber?: number, description?: string, isShow = true, categoryRef?: number) {
+  static ofForCreate(name: string, id?: number, categorySortNumber?: number, description?: string, isShow = true, categoryRef?: number) {
     const instance = new Category();
     instance.id = id;
-    instance.categoryName = categoryName;
+    instance.name = name;
     instance.categorySortNumber = categorySortNumber;
     instance.description = description;
     instance.isShow = isShow;
