@@ -13,8 +13,8 @@ export default class CategoryServiceImpl extends AdminService implements Categor
     }
     return result;
   }
-  public async createCategory(name: string, categoryNumber?: number, description?: string): Promise<CategoryDto> {
-    const result = await this.ctx.categoryRepositoy.createCategory(Category.ofForCreate(name, null, categoryNumber, description));
+  public async createCategory(name: string, categoryNumber?: number, description?: string, categoryRef?: number | null): Promise<CategoryDto> {
+    const result = await this.ctx.categoryRepositoy.createCategory(Category.ofForCreate(name, null, categoryNumber, description, true, categoryRef));
     return CategoryDto.ofCategoryEntity(result);
   }
 

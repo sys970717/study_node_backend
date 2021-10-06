@@ -36,6 +36,7 @@
     "@types/morgan": "^1.9.3",
     "@types/winston": "^2.4.4",
     "bcrypt": "^5.0.1",
+    "cluster": "^0.7.7",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "8.6.0",

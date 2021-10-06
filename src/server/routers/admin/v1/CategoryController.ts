@@ -20,10 +20,10 @@ export default class CategoryController {
       name,
       sortNumber,
       description,
-      categoryRef,
+      categoryRef = null,
     } = req.body;
 
-    const category = await ctx.categoryService.createCategory(name, sortNumber, description);
+    const category = await ctx.categoryService.createCategory(name, sortNumber, description, categoryRef);
     return res.json(category);
   }
 }

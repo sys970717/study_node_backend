@@ -7,7 +7,7 @@ export default class Category extends BaseTimeEntity {
   @Column({ name: 'category_name', nullable: false, unique: true, comment: '카테고리 명' })
   categoryName: string;
 
-  @Column({ name: 'category_sort', default: 0, nullable: false, unique: true, comment: '카테고리 정렬순서' })
+  @Column({ name: 'category_sort', default: 0, nullable: false, unique: false, comment: '카테고리 정렬순서' })
   categorySortNumber: number;
 
   @Column({ name: 'description', nullable: true, comment: '카테고리 간략 설명', length: 100 })

@@ -6,21 +6,20 @@ import Category from "../../../domains/entity/Category";
 
 @EntityRepository(Goods)
 export default class GoodsRepositoryImpl implements GoodsRepository {
-  async searchGoods(params: GoodsSearchRequest): Promise<[Goods[], number]> {
-    console.log('asdfsdf');
+  public async createGoods(goods: Goods) {
     const repository = getManager().getRepository(Goods);
-    repository.find({
-      where: {
-        isShow: 1,
-      }
-    })
-    const queryBuilder = createQueryBuilder(Goods, 'goods')
+    return await repository.save(goods);
+  }
+
+  searchGoods(params: GoodsSearchRequest): Promise<[Goods[], number]> {
+    const queryBuilder = createQueryBuilder()
     .select([
       'goods.id',
       'goods.name',
       'goods.price',
-      'category.id',
-      'category.category_name',
+      'goods.is_show',
+      'goods.category_id',
+      'category.*',
     ])
     .from(Goods, 'goods')
     .leftJoin(Category, 'category', 'goods.category_id = category.id')
@@ -30,11 +29,6 @@ export default class GoodsRepositoryImpl implements GoodsRepository {
     return queryBuilder
       .disableEscaping()
       .getManyAndCount();
-  }
-
-  public async createGoods(goods: Goods) {
-    const repository = getManager().getRepository(Goods);
-    return await repository.save(goods);
   }
 
 }

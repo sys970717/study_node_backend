@@ -11,7 +11,7 @@ import BaseTimeEntity from './BaseTimeEntity';
 
 @Entity({ name: 'goods' })
 export default class Goods extends BaseTimeEntity {
-  @Column({ name: 'user_name', nullable: false, comment: '상품명' })
+  @Column({ name: 'name', nullable: false, comment: '상품명' })
   name: string;
 
   @Column({ name: 'price', default: 0, comment: '정가', nullable: false })
