@@ -31,4 +31,13 @@ export default class GoodsRepositoryImpl implements GoodsRepository {
       .getManyAndCount();
   }
 
+  async updateGoods(id: number, name: string, price: number, description: string, isShow: boolean) {
+    const repository = getManager().getRepository(Goods);
+    const goods: Goods = await repository.findOne(id);
+
+    goods.change(name, price, description, isShow);
+
+    return goods.save();
+  }
+
 }

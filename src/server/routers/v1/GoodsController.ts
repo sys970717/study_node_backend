@@ -3,27 +3,38 @@ import { Controller } from '../../config/decorators/Controller';
 import { Get } from '../../config/decorators/Get';
 import { Post } from '../../config/decorators/Post';
 import ctx from '../../app-context';
+import * as ApiResponse from '../../domains/dto/Response'
+import GoodsSearchRequest from '../../domains/dto/goods/GoodsSearchRequest';
 
 @Controller('/goods')
 export default class GoodsController {
   @Get('/')
   public async getList(req: Request, res: Response) {
-    const {
-      beginIndex,
-    } = req.query;
+    const { pageNo = 1, pageSize = 10, name } = req.query;
+    
+    const r: ApiResponse.IResponse = {
+      code: 200,
+      success: true,
+      data: {
+        ...(await ctx.goodsService.searchGoods(GoodsSearchRequest.ofForCreate(pageNo, pageSize, name))),
+      }
+    };
 
-    const result = await ctx.goodsService.getGoodsList();
-
-    return res.json(beginIndex);
+    return res.json(r);
   }
 
   @Get('/:id')
-  public getGoods(req: Request, res: Response) {
-    const result = {
-      'hi': 'hi',
-      ...req.query,
+  public async getGoods(req: Request, res: Response) {
+    const id = Number(req.params.id);
+
+    const r: ApiResponse.IResponse = {
+      code: 200,
+      success: true,
+      data: {
+        ...(await ctx.goodsService.viewDetail(id)),
+      }
     };
-    return res.json(result);
+    return res.json(r);
   }
 
   @Post('/')

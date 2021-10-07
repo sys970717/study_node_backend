@@ -1,7 +1,9 @@
+import GoodsSearchRequest from '../domains/dto/goods/GoodsSearchRequest';
 import CategoryDto from '../domains/dto/category/CategoryDto';
-import { GoodsDto } from '../domains/dto/goods/IGoods';
+import { GoodsDto, GoodsInfoDto } from '../domains/dto/goods/IGoods';
 
 export default interface GoodsService {
-  getGoodsList(show?: boolean): Promise<GoodsDto[]>;
+  searchGoods(params: GoodsSearchRequest);
   createGoods(name: string, price: number, category: CategoryDto): Promise<GoodsDto>;
+  viewDetail(id: number): Promise<GoodsInfoDto>;
 }

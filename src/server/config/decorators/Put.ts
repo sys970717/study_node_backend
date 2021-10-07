@@ -17,7 +17,7 @@ export const Put = (path: string): MethodDecorator => {
     const routes = Reflect.getMetadata('routes', target.constructor) as Array<RouteDefinition>;
 
     routes.push({
-      requestMethod: 'post',
+      requestMethod: 'put',
       path,
       methodName: propertyKey
     });

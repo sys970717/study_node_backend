@@ -16,17 +16,10 @@ export default class GoodsServiceImpl extends AdminService implements GoodsServi
 
   async searchGoods(params: GoodsSearchRequest) {
     const result = await this.ctx.goodsRepository.searchGoods(params);
-    try {
-      result[0].forEach(e => {
-        logger.info(`${e.category}`);
-      });
-    } catch (err) {
-      logger.error(err);
-    }
     return new Page<GoodsDto> (result[1], params.pageSize, result[0].map(e => GoodsDto.of(e.name, e.price, CategoryDto.ofCategoryEntity(e.category), e.id)));
   }
 
-  async updateGoods(name: string, price: number, description: string, isShowW: boolean) {
-    const 
+  async updateGoods(id: number, name: string, price: number, description: string, isShow: boolean) {
+    return await this.ctx.goodsRepository.updateGoods(id, name, price, description, isShow);
   }
 }

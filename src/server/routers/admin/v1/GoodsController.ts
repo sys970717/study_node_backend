@@ -22,7 +22,7 @@ export default class GoodsController {
       code: 200,
       success: true,
       data: {
-        ...(await ctx.goodsService.createGoods(GoodsInfoDto.of(name, price, categoryId, description, isShow))),
+        ...(await ctx.goodsService.createGoods(GoodsInfoDto.of(null, name, price, categoryId, description, isShow))),
       },
     }
 
@@ -38,22 +38,25 @@ export default class GoodsController {
       success: true,
       data: {
         ...(await ctx.goodsService.searchGoods(GoodsSearchRequest.ofForCreate(pageNo, pageSize, name))),
-     }
+      }
     };
 
     return res.json(r);
   }
 
-  @Put('/')
+  @Put('/:id')
   public async updateGoods(req: Request, res: Response, next: NextFunction) {
     const { isShow, name, price, description } = req.body;
+    const id = Number(req.params.id);
     const r: ApiResponse.IResponse = {
       code: 200,
       success: true,
       data: {
-        ...(await ctx.goodsService.updateGoods(name, price, description, isShow)),
+        ...(await ctx.goodsService.updateGoods(id, name, price, description, isShow)),
       }
-    }
+    };
+
+    return res.json(r);
 
   }
 }

@@ -37,5 +37,12 @@ export default class Goods extends BaseTimeEntity {
     instance.description = description;
     return instance;
   }
+
+  change(name: string, price: number, description: string, isShow: boolean): void {
+    this.name = name;
+    this.price = price;
+    this.description = description;
+    this.isShow = isShow;
+  }
 }
 
