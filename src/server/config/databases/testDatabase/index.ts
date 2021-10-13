@@ -7,6 +7,7 @@ import logger from "../../../util/Logger";
 import Goods from "../../../domains/entity/Goods";
 import Category from "../../../domains/entity/Category";
 import UsersPassword from "../../../domains/entity/UsersPassword";
+import UserLastLogin from "../../../domains/entity/UsersLastLogin";
 
 const __dirname = path.resolve();
 
@@ -46,6 +47,7 @@ export const connectionOptions:ConnectionOptions = {
     Users,
     Goods,
     UsersPassword,
+    UserLastLogin
   ],
   migrations: [
     path.join(__dirname, './**/migrations/*.js'),

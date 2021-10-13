@@ -36,5 +36,5 @@ export default class Users extends BaseTimeEntity {
     instance.passwordInfo = usersPasswordInfo;
 
     return instance;
-  };
-};
+  }
+}

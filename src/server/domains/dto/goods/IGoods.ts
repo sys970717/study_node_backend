@@ -15,6 +15,7 @@ export interface IGoodsCreateDto {
   description: string;
   categoryId: number;
   isShow: boolean;
+  goodsCode: string | undefined;
   // quantity: number;
 }
 
@@ -24,16 +25,18 @@ export class GoodsInfoDto implements IGoodsCreateDto {
   description: string;
   categoryId: number;
   isShow: boolean;
+  goodsCode: string;
   id: number;
   // quantity: number;
 
-  static of(id: number, name: string, price: number, categoryId: number, description?: string, isShow?: boolean): GoodsInfoDto {
+  static of(id: number, name: string, price: number, categoryId: number, description?: string, goodsCode?: string, isShow?: boolean): GoodsInfoDto {
     const instance = new GoodsInfoDto();
     instance.id = id;
     instance.name = name;
     instance.price = price;
     instance.categoryId = categoryId;
     instance.description = description;
+    instance.goodsCode = goodsCode;
     instance.isShow = isShow || true;
 
     return instance;

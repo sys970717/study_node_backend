@@ -8,8 +8,10 @@ import {
 } from 'typeorm';
 import Category from './Category';
 import BaseTimeEntity from './BaseTimeEntity';
+import CreateUniqueId from '../../util/CreateUniqueId';
 
 @Entity({ name: 'goods' })
+@Index('search-name-isShow-idx', ["name", "isShow"])
 export default class Goods extends BaseTimeEntity {
   @Column({ name: 'name', nullable: false, comment: '상품명' })
   name: string;
@@ -18,20 +20,27 @@ export default class Goods extends BaseTimeEntity {
   price: number;
 
   @Column({ name: 'is_show', default: true, comment: '노출여부', nullable: false, })
-  @Index('goods-show-idx')
-  isShow: boolean
+  isShow: boolean;
 
   @Column({ name: 'description', comment: '상품설명', type: 'text'  })
-  description: string
+  description: string;
+
+  @Column({ name: 'goods_cd', comment: '상품코드', type: 'varchar', length: 15 })
+  @Index('goods-cd-idx')
+  goodsCode: string;
   
   @ManyToOne(type => Category, category => category.id)
   @JoinColumn({ name: 'category_id' })
+  @Index("category-join-idx")
   category: Category;
 
-  static ofForCreate(name: string, price: number, isShow = true , category: Category, description?: string) {
+  static ofForCreate(name: string, price: number, isShow = true, category: Category, goodsCode?: string, description?: string) {
     const instance = new Goods();
+    const createUniqIdUtil = new CreateUniqueId()
+    
     instance.name = name;
     instance.price = price;
+    instance.goodsCode = goodsCode || createUniqIdUtil.getRandomStringByType(createUniqIdUtil._getTypeCode().GOODS);
     instance.isShow = isShow;
     instance.category = category;
     instance.description = description;

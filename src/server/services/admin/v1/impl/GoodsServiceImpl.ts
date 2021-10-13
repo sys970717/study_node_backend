@@ -10,7 +10,7 @@ import logger from "../../../../util/Logger";
 export default class GoodsServiceImpl extends AdminService implements GoodsService {
   async createGoods(goodsInfo: IGoodsCreateDto) {
     const categroy = await this.ctx.categoryRepositoy.findById(goodsInfo.categoryId);
-    const entity = Goods.ofForCreate(goodsInfo.name, goodsInfo.price, goodsInfo.isShow, categroy, goodsInfo.description);
+    const entity = Goods.ofForCreate(goodsInfo.name, goodsInfo.price, goodsInfo.isShow, categroy, goodsInfo.goodsCode, goodsInfo.description);
     return await this.ctx.goodsRepository.createGoods(entity);
   }
 

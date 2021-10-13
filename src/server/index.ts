@@ -5,7 +5,6 @@ import { cpus } from 'os';
 import { createConnection } from 'typeorm';
 import { connectionOptions } from './config/databases/testDatabase';
 import logger from './util/Logger';
-import { count } from 'console';
 
 const port: number = Number(process.env.WEB_PORT) || 3000;
 const cpuCount = cpus().length;

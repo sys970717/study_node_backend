@@ -13,17 +13,11 @@ export default class GoodsServiceImpl extends Service implements GoodsService {
     const result = await this.ctx.goodsRepository.searchGoods(params);
     return new Page<GoodsDto> (result[1], params.pageSize, result[0].map(e => GoodsDto.of(e.name, e.price, CategoryDto.ofCategoryEntity(e.category), e.id)));
   }
-
-  public async createGoods(name: string, price: number, category: CategoryDto): Promise<GoodsDto> {
-    const categoryEntity = Category.ofForCreate(category.name, category.id, category.sort, category.description, category.isShow);
-    const result = await this.ctx.goodsRepository.register(Goods.ofForCreate(name, price, true, categoryEntity));
-    return GoodsDto.of(name, price, category, result.id);
-  }
-
+  
   async viewDetail(id: number) {
     const goods = await this.ctx.goodsRepository.viewDetail(id);
     console.log(goods);
-    return GoodsInfoDto.of(goods.id, goods.name, goods.price, goods.category.id, goods.description, goods.isShow);
+    return GoodsInfoDto.of(goods.id, goods.name, goods.price, goods.category.id, goods.description, goods.goodsCode, goods.isShow);
   }
 
 }
