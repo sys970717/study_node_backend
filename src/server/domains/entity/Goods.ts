@@ -37,7 +37,6 @@ export default class Goods extends BaseTimeEntity {
   static ofForCreate(name: string, price: number, isShow = true, category: Category, goodsCode?, description?: string) {
     const instance = new Goods();
     const createUniqIdUtil = new CreateUniqueId();
-    console.log(goodsCode || createUniqIdUtil.getRandomStringByType(createUniqIdUtil._getTypeCode().GOODS));
     
     instance.name = name;
     instance.price = price;

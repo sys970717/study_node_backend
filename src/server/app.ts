@@ -1,6 +1,6 @@
 import express, { ErrorRequestHandler, } from 'express';
 import 'reflect-metadata';
-import v1Router from './routers/v1/index';
+import v1Router from './routers/v1';
 import AdminRouterV1 from './routers/admin/v1';
 import dotenv from 'dotenv';
 import cors from 'cors';

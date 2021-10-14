@@ -4,7 +4,6 @@ import { createQueryBuilder, EntityRepository, getManager } from "typeorm";
 import GoodsRepository from "../GoodsRepository";
 import Category from "../../../domains/entity/Category";
 
-@EntityRepository(Goods)
 export default class GoodsRepositoryImpl implements GoodsRepository {
   public async createGoods(goods: Goods) {
     const repository = getManager().getRepository(Goods);

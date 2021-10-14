@@ -5,12 +5,14 @@ import { Post } from '../../config/decorators/Post';
 import ctx from '../../app-context';
 import * as ApiResponse from '../../domains/dto/Response'
 import GoodsSearchRequest from '../../domains/dto/goods/GoodsSearchRequest';
+import logger from '../../util/Logger';
 
 @Controller('/goods')
 export default class GoodsController {
   @Get('/')
   public async getList(req: Request, res: Response) {
     const { pageNo = 1, pageSize = 10, name } = req.query;
+    logger.info('asfdasdf');
     
     const r: ApiResponse.IResponse = {
       code: 200,
@@ -26,6 +28,7 @@ export default class GoodsController {
   @Get('/:id')
   public async getGoods(req: Request, res: Response) {
     const id = Number(req.params.id);
+    logger.debug('HERE??');
 
     const r: ApiResponse.IResponse = {
       code: 200,
@@ -35,12 +38,5 @@ export default class GoodsController {
       }
     };
     return res.json(r);
-  }
-
-  @Post('/')
-  public createGoods(req: Request, res: Response) {
-    const { id } = req.params;
-    const { name } = req.body;
-    return res.json({name, id});
   }
 }

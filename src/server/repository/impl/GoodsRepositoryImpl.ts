@@ -1,5 +1,5 @@
 import GoodsRepository from '../GoodsRepository';
-import { getManager } from 'typeorm';
+import { EntityRepository, getManager } from 'typeorm';
 import Goods from '../../domains/entity/Goods';
 import GoodsSearchRequest from '../../domains/dto/goods/GoodsSearchRequest';
 
@@ -9,7 +9,8 @@ export default class GoodsRepositoryImpl implements GoodsRepository {
     return await repository.manager.save(goods);
   }
 
-  searchGoods(params: GoodsSearchRequest): Promise<[Goods[], number]> {
+  async searchGoods(params: GoodsSearchRequest): Promise<[Goods[], number]> {
+    console.log('HEHEHE??');
     const repository = getManager().getRepository(Goods);
     const queryBuilder = repository.createQueryBuilder('goods')
     .select([
@@ -17,16 +18,16 @@ export default class GoodsRepositoryImpl implements GoodsRepository {
       'goods.name',
       'goods.price',
       'goods.is_show',
+      'goods.description',
       'category.id',
       'category.name',
     ])
     .leftJoin('goods.category', 'category')
+    .where('goods.isShow = true')
     .limit(params.getLimit())
     .offset(params.getOffset());
 
-    queryBuilder.where('goods.isShow = true');
-
-    return queryBuilder
+    return await queryBuilder
       .disableEscaping()
       .getManyAndCount();
   }

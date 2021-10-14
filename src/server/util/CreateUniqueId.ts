@@ -11,7 +11,7 @@ export default class CreateUniqueId {
   }
 
   getRandomStringByType = (type) => {
-    const randomStr = randomstring(13);
+    const randomStr = randomstring.generate(13);
     switch(type) {
       case this._TYPE_CODE.GOODS: 
         return `G${randomStr}`;

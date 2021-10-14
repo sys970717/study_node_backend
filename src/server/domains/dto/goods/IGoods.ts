@@ -52,6 +52,7 @@ export class GoodsDto {
   private readonly goodsId: number;
 
   constructor(name:string, category: CategoryDto, price: number, goodsId?: number, description?: string) {
+    console.log(name);
     this.name = name;
     this.price = price || 0;
     this.category = category;
@@ -60,8 +61,8 @@ export class GoodsDto {
     this.description = description;
   }
 
-  static of(name: string, price: number, category: CategoryDto, id: number) {
-    return new GoodsDto(name, category, price, id);
+  static of(name: string, price: number, category: CategoryDto, id: number, description?: string) {
+    return new GoodsDto(name, category, price, id, description);
   }
 
   static ofForCreate(name: string, price: number, category: CategoryDto) {
