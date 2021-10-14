@@ -25,7 +25,7 @@ export default class Goods extends BaseTimeEntity {
   @Column({ name: 'description', comment: '상품설명', type: 'text'  })
   description: string;
 
-  @Column({ name: 'goods_cd', comment: '상품코드', type: 'varchar', length: 15 })
+  @Column({ name: 'goods_cd', nullable: false, unique: true, comment: '상품코드', type: 'varchar', length: 15 })
   @Index('goods-cd-idx')
   goodsCode: string;
   
@@ -34,9 +34,10 @@ export default class Goods extends BaseTimeEntity {
   @Index("category-join-idx")
   category: Category;
 
-  static ofForCreate(name: string, price: number, isShow = true, category: Category, goodsCode?: string, description?: string) {
+  static ofForCreate(name: string, price: number, isShow = true, category: Category, goodsCode?, description?: string) {
     const instance = new Goods();
-    const createUniqIdUtil = new CreateUniqueId()
+    const createUniqIdUtil = new CreateUniqueId();
+    console.log(goodsCode || createUniqIdUtil.getRandomStringByType(createUniqIdUtil._getTypeCode().GOODS));
     
     instance.name = name;
     instance.price = price;
