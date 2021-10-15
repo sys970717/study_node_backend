@@ -39,7 +39,7 @@ class App {
 }
 
 process.on('uncaughtException', (e) => {
-  Logger.error(e);
+  Logger.error('server error', e);
 });
 
 const app = new App().application;

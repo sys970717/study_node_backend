@@ -8,7 +8,7 @@ import * as ApiResponse from '../../../domains/dto/Response';
 export default class UsersController {
   @Get('/')
   public async userList(req: Request, res: Response, next: NextFunction) {
-    const result = await ctx.usersService.getUsers();
+    const result = (await ctx).usersService.getUsers();
 
     const r: ApiResponse.IResponse = {
       code: 200,

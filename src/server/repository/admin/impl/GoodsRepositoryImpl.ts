@@ -1,18 +1,21 @@
 import GoodsSearchRequest from "../../../domains/dto/goods/GoodsSearchRequest";
 import Goods from "../../../domains/entity/Goods";
-import { createQueryBuilder, EntityRepository, getManager } from "typeorm";
+import { createQueryBuilder, EntityManager, EntityRepository, getManager, Repository } from "typeorm";
 import GoodsRepository from "../GoodsRepository";
 import Category from "../../../domains/entity/Category";
 
+@EntityRepository()
 export default class GoodsRepositoryImpl implements GoodsRepository {
+  constructor(private manager: EntityManager) {
+
+  }
+
   public async createGoods(goods: Goods) {
-    const repository = getManager().getRepository(Goods);
-    return await repository.save(goods);
+    return await this.manager.save(goods);
   }
 
   searchGoods(params: GoodsSearchRequest): Promise<[Goods[], number]> {
-    const repository = getManager().getRepository(Goods);
-    const queryBuilder = repository.createQueryBuilder('goods')
+    const queryBuilder = this.manager.createQueryBuilder(Goods, 'goods')
     .select([
       'goods.id',
       'goods.name',

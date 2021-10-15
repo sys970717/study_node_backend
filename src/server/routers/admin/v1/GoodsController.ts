@@ -9,9 +9,17 @@ import { IGoodsCreateDto, GoodsInfoDto } from "../../../domains/dto/goods/IGoods
 import { check } from "express-validator";
 import GoodsSearchRequest from "../../../domains/dto/goods/GoodsSearchRequest";
 import logger from "../../../util/Logger";
+import GoodsService from "../../../services/admin/v1/GoodsService";
 
 @Controller('/goods')
 export default class GoodsController {
+  private goodsService: GoodsService;
+
+  constructor() {
+    ctx.then(r => {
+      this.goodsService = r.goodsService;
+    });
+  }
   @Post('/')
   public async createGoods(req: Request, res: Response, next: NextFunction) {
     check('name', 'name is required').not().isEmpty().bail();
@@ -22,7 +30,7 @@ export default class GoodsController {
       code: 200,
       success: true,
       data: {
-        ...(await ctx.goodsService.createGoods(GoodsInfoDto.of(null, name, price, categoryId, description, goodsCode, isShow))),
+        ...(await this.goodsService.createGoods(GoodsInfoDto.of(null, name, price, categoryId, description, goodsCode, isShow))),
       },
     }
 
@@ -37,7 +45,7 @@ export default class GoodsController {
       code: 200,
       success: true,
       data: {
-        ...(await ctx.goodsService.searchGoods(GoodsSearchRequest.ofForCreate(pageNo, pageSize, name))),
+        ...(await this.goodsService.searchGoods(GoodsSearchRequest.ofForCreate(pageNo, pageSize, name))),
       }
     };
 
@@ -52,7 +60,7 @@ export default class GoodsController {
       code: 200,
       success: true,
       data: {
-        ...(await ctx.goodsService.updateGoods(id, name, price, description, isShow)),
+        ...(await this.goodsService.updateGoods(id, name, price, description, isShow)),
       }
     };
 

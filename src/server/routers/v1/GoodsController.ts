@@ -12,7 +12,6 @@ export default class GoodsController {
   @Get('/')
   public async getList(req: Request, res: Response) {
     const { pageNo = 1, pageSize = 10, name } = req.query;
-    logger.info('asfdasdf');
     
     const r: ApiResponse.IResponse = {
       code: 200,

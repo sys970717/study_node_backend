@@ -9,7 +9,7 @@ import CategoryDto from '../../../domains/dto/category/CategoryDto';
 export default class CategoryController {
   @Get('/')
   public async getList(req: Request, res: Response, next: NextFunction) {
-    const result = await ctx.categoryService.getCategoryList();
+    const result = (await ctx).categoryService.getCategoryList();
 
     return res.json(result);
   }
@@ -23,7 +23,7 @@ export default class CategoryController {
       categoryRef = null,
     } = req.body;
 
-    const category = await ctx.categoryService.createCategory(name, sortNumber, description, categoryRef);
+    const category = (await ctx).categoryService.createCategory(name, sortNumber, description, categoryRef);
     return res.json(category);
   }
 }
