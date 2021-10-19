@@ -60,7 +60,7 @@
   },
   "scripts": {
     "test": "npx jest --detectOpenHandles",
-    "dev": "nodemon --watch src/server -e ts --exec npm run dev:start",
+    "dev": "nodemon --watch ./src -e ts --exec npm run dev:start",
     "dev:start": "npm run build && node --experimental-modules --es-module-specifier-resolution=node dist/index.js",
     "build": "npm run lint && tsc --p tsconfig.build.json",
     "start": "nodemon --exec ts-node dist/index.js",

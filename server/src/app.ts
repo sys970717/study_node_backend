@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler, } from 'express';
+import express, { ErrorRequestHandler, Request, } from 'express';
 import 'reflect-metadata';
 import v1Router from './routers/v1';
 import AdminRouterV1 from './routers/admin/v1';
@@ -44,7 +44,22 @@ process.on('uncaughtException', (e) => {
 
 const app = new App().application;
 
-app.use(cors());
+const corsOptionsDelegate = (req: Request, cb: Function) => {
+  const allowList = [
+    `http://localhost:5000`,
+  ];
+
+  const corsOption = {};
+  if (allowList.indexOf(req.header('Origin')) !== -1) {
+    corsOption['origin'] = true;
+  } else {
+    corsOption['origin'] = false;
+  }
+  corsOption['credentials'] = true;
+  cb(null, corsOption);
+};
+
+app.use(cors(corsOptionsDelegate));
 app.use(express.urlencoded({
     extended: true,
 }));
@@ -69,7 +84,6 @@ app.use(session({
 }));
 
 app.use('/admin/v1', AdminRouterV1);
-app.use('/fe', express.static(__dirname + '/public'));
 
 app.use((req, res, next) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
