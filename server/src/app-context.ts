@@ -13,6 +13,7 @@ export const containerOfObjects = () => {
   const context = {} as ServiceContext;
 
   context.dbconn = ORM.default;
+
   context.usersService = new UsersServiceImpl(context);
   context.goodsService = new GoodsServiceImpl(context);
 

@@ -33,13 +33,17 @@ export default class UsersController {
     }
 
     const userLoginDto = UserLoginDto.ofForSignIn(name, password);
+    const user = await ctx.usersService.login(userLoginDto);
+    req.session.uniqueId = user.id;
+    req.user = user.username;
+    console.log(req.user);
+
+    req.session.save();
 
     const r: ApiResponse.IResponse = {
       code: 200,
       success: true,
-      data: {
-        ...(await ctx.usersService.login(userLoginDto)),
-      },
+      data: user,
     }
 
     return res.json(r);

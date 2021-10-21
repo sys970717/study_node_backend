@@ -5,7 +5,7 @@ export default class UserLoginDto {
   public username:string;
   public password:string;
 
-  private id: number;
+  public id: number;
   private cash: number;
 
   constructor(username: string, password: string, id?: number, cash?: number) {

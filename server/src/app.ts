@@ -10,6 +10,9 @@ import Logger, { logRequest } from './util/Logger';
 import morganMiddleware from './util/morganMiddleware';
 import path from 'path';
 import session from 'express-session';
+import { UserRedis } from './config/databases/redis/UserRedis';
+import connectRedis from 'connect-redis';
+import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config();
 
@@ -17,10 +20,10 @@ const __dirname = path.resolve();
 
 declare global {
   namespace Express {
-    export interface Session {
-      uniqueId?: string | number;
-      passport?: any;
-    }
+    // export interface Session {
+    //   uniqueId?: string | number;
+    //   passport?: any;
+    // }
     export interface Request {
       user?: string,
       admin?: string,
@@ -28,6 +31,12 @@ declare global {
       _startAt?: number,
       inboundIp?: string | string[],
     }
+  }
+}
+
+declare module 'express-session' {
+  interface SessionData {
+      uniqueId: number;
   }
 }
 
@@ -42,6 +51,7 @@ process.on('uncaughtException', (e) => {
   Logger.error('server error', e);
 });
 
+const RedisStore = connectRedis(session);
 const app = new App().application;
 
 const corsOptionsDelegate = (req: Request, cb: Function) => {
@@ -70,9 +80,11 @@ app.use((req, res, next) => {
     logRequest(req, res);
     next();
 });
-
+console.log('redis Connection?');
+console.log(UserRedis.connected);
 app.use('/v1', v1Router);
 app.use(session({
+  genid: () => uuidv4(),
   secret: 's#y$97@7!7',
   resave: false,
   saveUninitialized: true,
@@ -81,6 +93,11 @@ app.use(session({
     httpOnly: true,
     secure: false
   },
+  store: new RedisStore({
+    client: UserRedis,
+    ttl: 260,
+    prefix : "session:",
+  }),
 }));
 
 app.use('/admin/v1', AdminRouterV1);

@@ -2,32 +2,38 @@
   import axios from 'axios';
 	export let name;
 
-  function signIn (ele) {
+  function signIn (e) {
+    e.preventDefault();
+const ele  =e.target
+
+
     const body = {
       name: ele.name.value,
       password: ele.password.value,
       gender: 1
     };
 
-    console.log(body);
+    console.log(typeof ele.action);
+    console.log(typeof body)
 
     let req;
-
     try {
-      axios({
-        url: ele.action,
-        method: 'post',
-        data: body,
+
+      axios.post(ele.action,body ,{
         withCredentials: true,
       })
-      .then(res => { req = res.data })
+      .then(res => {
+        console.log(res)
+        req = res.data
+      })
       .catch(err => console.error(err) );
-  
+
       console.log(req);
 
       
       return false;
     } catch (e) {
+      console.log('fail')
       console.error(e);
       return false;
     }
@@ -40,7 +46,7 @@
 
 <main>
   <form action="http://localhost:60809/v1/users/session" method="post"
-    on:submit={e => signIn(e.target) } >
+    on:submit={e => signIn(e) } >
     <input type="text" name="name" placeholder="user name"/>
     <input type="password" name="password" placeholder="password"/>
     <button type="submit">Sign in</button>
