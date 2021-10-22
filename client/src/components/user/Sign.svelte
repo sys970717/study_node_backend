@@ -4,7 +4,7 @@
 
   function signIn (e) {
     e.preventDefault();
-const ele  =e.target
+    const ele = e.target
 
 
     const body = {
@@ -13,9 +13,6 @@ const ele  =e.target
       gender: 1
     };
 
-    console.log(typeof ele.action);
-    console.log(typeof body)
-
     let req;
     try {
 
@@ -23,22 +20,12 @@ const ele  =e.target
         withCredentials: true,
       })
       .then(res => {
-        console.log(res)
         req = res.data
       })
       .catch(err => console.error(err) );
-
-      console.log(req);
-
-      
-      return false;
     } catch (e) {
-      console.log('fail')
       console.error(e);
-      return false;
     }
-    
-
     return false;
   }
 
