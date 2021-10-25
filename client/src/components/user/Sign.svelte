@@ -1,11 +1,11 @@
 <script>
   import axios from 'axios';
+  import { currentUser } from '../../store/store';
 	export let name;
 
   function signIn (e) {
     e.preventDefault();
     const ele = e.target
-
 
     const body = {
       name: ele.name.value,
@@ -21,6 +21,7 @@
       })
       .then(res => {
         req = res.data
+        currentUser();
       })
       .catch(err => console.error(err) );
     } catch (e) {
