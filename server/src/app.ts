@@ -13,6 +13,7 @@ import session from 'express-session';
 import { UserRedis } from './config/databases/redis/UserRedis';
 import connectRedis from 'connect-redis';
 import { v4 as uuidv4 } from 'uuid';
+import UserSession from './domains/dto/user/UserSession';
 
 dotenv.config();
 
@@ -20,10 +21,6 @@ const __dirname = path.resolve();
 
 declare global {
   namespace Express {
-    // export interface Session {
-    //   uniqueId?: string | number;
-    //   passport?: any;
-    // }
     export interface Request {
       user?: string,
       admin?: string,
@@ -31,12 +28,6 @@ declare global {
       _startAt?: number,
       inboundIp?: string | string[],
     }
-  }
-}
-
-declare module 'express-session' {
-  interface SessionData {
-      uniqueId: number;
   }
 }
 
@@ -87,7 +78,7 @@ app.use(session({
   genid: () => uuidv4(),
   secret: 's#y$97@7!7',
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     maxAge: 60 * 30,
     httpOnly: true,

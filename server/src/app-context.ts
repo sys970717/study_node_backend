@@ -3,6 +3,7 @@ import { ServiceContext } from './services/Service';
 import * as ORM from './config/databases/db-context';
 import UsersServiceImpl from './services/impl/UsersServiceimpl';
 import GoodsServiceImpl from './services/impl/GoodsServiceImpl';
+import AuthServiceImpl from './services/impl/AuthServiceImpl';
 import GoodsRepositoryImpl from './repository/impl/GoodsRepositoryImpl';
 import CategoryServiceImpl from './services/admin/v1/impl/CategoryServiceImpl';
 import CategoryRepositoryImpl from './repository/admin/impl/CategoryRepositoryImpl';
@@ -16,6 +17,7 @@ export const containerOfObjects = () => {
 
   context.usersService = new UsersServiceImpl(context);
   context.goodsService = new GoodsServiceImpl(context);
+  context.authService = new AuthServiceImpl(context);
 
   context.usersRepository = new UsersRepositoryImpl();
   context.goodsRepository = new GoodsRepositoryImpl();

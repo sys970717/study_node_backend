@@ -3,10 +3,12 @@ import UsersRepository from '../repository/UsersRepository';
 import { Connection } from 'typeorm';
 import GoodsService from './GoodsService';
 import UsersService from './UsersService';
+import AuthService from './authService';
 
 export type ServiceContext = {
   usersService: UsersService;
   goodsService: GoodsService;
+  authService: AuthService;
   
   usersRepository: UsersRepository;
   goodsRepository:GoodsRepository;

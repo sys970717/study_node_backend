@@ -8,7 +8,7 @@ import UserLoginDto from '../../domains/dto/UserLoginDto';
 import logger from '../../util/Logger';
 import FormSyntaxError from '../../domains/errors/FormSyntaxError';
 import { DELETE } from '../../config/decorators/DELETE';
-import * as ApiResponse from '../../domains/dto/Response'
+import * as ApiResponse from '../../domains/dto/Response';
 
 @Controller('/users')
 export default class UsersController {
@@ -34,7 +34,8 @@ export default class UsersController {
 
     const userLoginDto = UserLoginDto.ofForSignIn(name, password);
     const user = await ctx.usersService.login(userLoginDto);
-    req.session.uniqueId = user.id;
+    req.session.user.sid = '';
+
     req.user = user.username;
     console.log(req.user);
 
