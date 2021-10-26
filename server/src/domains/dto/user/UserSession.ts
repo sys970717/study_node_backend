@@ -1,7 +1,8 @@
 class UserSession {
   name: string;
-  password: string;
-  sid: string;
+  role: string;
+  point?: number;
+  sid?: string;
 }
 
 export default UserSession;

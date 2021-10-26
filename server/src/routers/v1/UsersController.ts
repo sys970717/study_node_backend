@@ -9,6 +9,7 @@ import logger from '../../util/Logger';
 import FormSyntaxError from '../../domains/errors/FormSyntaxError';
 import { DELETE } from '../../config/decorators/DELETE';
 import * as ApiResponse from '../../domains/dto/Response';
+import { Session } from 'express-session';
 
 @Controller('/users')
 export default class UsersController {
@@ -34,12 +35,12 @@ export default class UsersController {
 
     const userLoginDto = UserLoginDto.ofForSignIn(name, password);
     const user = await ctx.usersService.login(userLoginDto);
-    req.session.user.sid = '';
-
-    req.user = user.username;
-    console.log(req.user);
-
-    req.session.save();
+    req.session.user = {
+      name: user.username,
+      role: 'USER',
+      point: 0,
+      
+    };
 
     const r: ApiResponse.IResponse = {
       code: 200,

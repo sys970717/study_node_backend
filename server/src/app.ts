@@ -31,6 +31,14 @@ declare global {
   }
 }
 
+declare module 'express-session' {
+  interface SessionData {
+      user: UserSession,
+      // uniqueId: number;
+  }
+}
+
+
 class App {
     public application : express.Application;
     constructor() {
@@ -67,29 +75,29 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(morganMiddleware);
 
-app.use((req, res, next) => {
-    logRequest(req, res);
-    next();
-});
-console.log('redis Connection?');
-console.log(UserRedis.connected);
-app.use('/v1', v1Router);
 app.use(session({
-  genid: () => uuidv4(),
+  // genid: () => uuidv4(),
   secret: 's#y$97@7!7',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 60 * 30,
+    maxAge: Number(process.env.COOKIE_TTL),
     httpOnly: true,
     secure: false
   },
   store: new RedisStore({
     client: UserRedis,
-    ttl: 260,
+    ttl: Number(process.env.COOKIE_TTL),
     prefix : "session:",
   }),
 }));
+
+app.use((req, res, next) => {
+    logRequest(req, res);
+    next();
+});
+
+app.use('/v1', v1Router);
 
 app.use('/admin/v1', AdminRouterV1);
 
