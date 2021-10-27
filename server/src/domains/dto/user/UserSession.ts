@@ -1,5 +1,5 @@
 class UserSession {
-  name: string;
+  username: string;
   role: string;
   point?: number;
   sid?: string;

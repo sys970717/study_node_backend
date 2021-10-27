@@ -8,20 +8,18 @@
     const ele = e.target
 
     const body = {
-      name: ele.name.value,
+      username: ele.name.value,
       password: ele.password.value,
       gender: 1
     };
 
     let req;
     try {
-
       axios.post(ele.action,body ,{
         withCredentials: true,
       })
       .then(res => {
-        req = res.data
-        currentUser();
+        $currentUser = {...res.data.data};
       })
       .catch(err => console.error(err) );
     } catch (e) {
@@ -33,12 +31,18 @@
 </script>
 
 <main>
+
+{#if !$currentUser}
   <form action="http://localhost:60809/v1/users/session" method="post"
     on:submit={e => signIn(e) } >
     <input type="text" name="name" placeholder="user name"/>
     <input type="password" name="password" placeholder="password"/>
     <button type="submit">Sign in</button>
   </form>
+{:else}
+  <nav>Hello {$currentUser.username}!! </nav>
+{/if}
+  
 </main>
 
 <style>

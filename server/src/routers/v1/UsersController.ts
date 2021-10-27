@@ -9,7 +9,6 @@ import logger from '../../util/Logger';
 import FormSyntaxError from '../../domains/errors/FormSyntaxError';
 import { DELETE } from '../../config/decorators/DELETE';
 import * as ApiResponse from '../../domains/dto/Response';
-import { Session } from 'express-session';
 
 @Controller('/users')
 export default class UsersController {
@@ -23,20 +22,20 @@ export default class UsersController {
   @Post('/session')
   public async getUser(req: Request, res: Response, next:NextFunction) {
     const {
-      name,
+      username,
       password,
     } = req.body;
 
-    if(!name || name.length <= 1) {
+    if(!username || username.length <= 1) {
       return next('IllegalAccessError');
     } else if(!password || password.length < 3) {
       return next('IllegalAccessError');
     }
 
-    const userLoginDto = UserLoginDto.ofForSignIn(name, password);
+    const userLoginDto = UserLoginDto.ofForSignIn(username, password);
     const user = await ctx.usersService.login(userLoginDto);
     req.session.user = {
-      name: user.username,
+      username: user.username,
       role: 'USER',
       point: 0,
       
