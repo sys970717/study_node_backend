@@ -1,6 +1,5 @@
 <script>
-  import axios from 'axios';
-  import { currentUser } from '../../store/store';
+  
 	export let name;
 
   function signIn (e) {
@@ -19,7 +18,7 @@
         withCredentials: true,
       })
       .then(res => {
-        $currentUser = {...res.data.data};
+        currentUser.set(res.data.data);
       })
       .catch(err => console.error(err) );
     } catch (e) {

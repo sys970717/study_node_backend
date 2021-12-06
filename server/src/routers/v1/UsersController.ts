@@ -38,7 +38,6 @@ export default class UsersController {
       username: user.username,
       role: 'USER',
       point: 0,
-      
     };
 
     const r: ApiResponse.IResponse = {
